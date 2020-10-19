@@ -1,0 +1,44 @@
+[
+  {
+    "id": 2,
+    "date": "2019-09-17T08:40:50",
+    "date_gmt": "2019-09-17T08:40:50",
+    "guid": {
+      "rendered": "https:\/\/wordpress.homes.com:5050\/?page_id=2"
+    },
+    "modified": "2020-10-25T13:49:03",
+    "modified_gmt": "2020-10-25T13:49:03",
+    "slug": "home-page",
+    "status": "publish",
+    "type": "page",
+    "link": "https:\/\/wordpress.homes.com:5050\/home-page\/",
+    "title": {
+      "rendered": "Home in Malta"
+    },
+    "content": {
+      "rendered": "<p>hi.<\/p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>hi.<\/p>\n",
+      "protected": false
+    },
+    "author": 1,
+    "featured_media": 0,
+    "parent": 0,
+    "menu_order": 0,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "template": "home.php",
+    "acf": {
+      "top_section_title": "Top",
+      "top_section_description": "<p><strong>This is Malta.<\/strong><\/p>\n",
+      "top_section_background": "https:\/\/wordpress.homes.com:5050\/wp-content\/uploads\/2020\/06\/home-bg.jpg",
+      "top_section_to_action_button": {
+        "title": "Malta Homes",
+        "url": "https:\/\/wordpress.homes.com:5050\/homes\/",
+        "target": ""
+      }
+    }
+  }
+]
