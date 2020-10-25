@@ -1,13 +1,13 @@
 import { EENV } from '@srcTypes/enums';
 
-import { EnvConfig } from "@config/envConfig";
+import { ENV } from "@config/envConfig";
 
 /**
  * Replaced the keys of a url with it's correct values
  * @param url {string} - URL to change
  * @param paramsObj {any} - Object with keys to replace
  */
-export const formatUrl = ( url: string, paramsObj: any ): string => {
+export const formatUrl = ( url: string, paramsObj?: any ): string => {
   return Object
     .keys( paramsObj )
     .reduce( ( newUrl, key ) =>
@@ -27,9 +27,9 @@ export const isLocal = ( hostname:string ): boolean => {
 }
 
 export const isDev = (): boolean => {
-  return EnvConfig.env === EENV.dev;
+  return ENV() === EENV.dev;
 }
 
 export const isProduction = (): boolean => {
-  return EnvConfig.env === EENV.prod;
+  return ENV() === EENV.prod;
 }

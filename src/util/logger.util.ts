@@ -3,14 +3,14 @@ import { createLogger, transports, format } from 'winston';
 import { isEmpty } from '@util/core.util';
 import { getTime, getDay } from '@util/time.util';
 
-import { EnvConfig } from "@config/envConfig";
+import { LOGGER_NAME, LOGGER_LEVEL } from "@config/envConfig";
 
 // const windowDefined = typeof window !== 'undefined' && window && window !== undefined && !isEmpty(window);
 // const loggerType = windowDefined ? 'react' : 'node';
 const loggerType = 'node';
 let instance:any;
-const loggerName = EnvConfig.loggerName;
-const loggerLevel = EnvConfig.loggerLevel;
+const loggerName = LOGGER_NAME();
+const loggerLevel = LOGGER_LEVEL();
 
 class NoLogger {
   constructor() {
@@ -77,7 +77,7 @@ class SSRLogger {
   }
 
   hit = (msg:any) => {
-    instance.debug(`[HIT]${msg}`);
+    instance.info(`[HIT]${msg}`);
   }
 
   log = (msg:any) => {

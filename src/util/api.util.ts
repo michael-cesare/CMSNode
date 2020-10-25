@@ -4,9 +4,9 @@ import https from 'https';
 import logger from '@util/logger.util';
 import { isDev } from '@util/url.util';
 
-import { EnvConfig } from "@config/envConfig";
+import { SITE_URL } from "@config/envConfig";
 
-const rootUrl = EnvConfig.siteUrl;
+const rootUrl = SITE_URL();
 
 enum EFetchMethods {
   get = 'get',

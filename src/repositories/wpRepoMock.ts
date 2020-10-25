@@ -1,8 +1,19 @@
-import fs from 'fs';
 import { EWordpressFiles } from '@srcTypes/enums';
-import { IFetchPostsRequest, IFetchPostsResponse, IWpRepo } from '@srcTypes/models';
+import {
+  IFetchPostsRequest,
+  IFetchPostsResponse,
+  IWPObject,
+  IFetchResponse,
+  IWpRepo,
+  IWPMenu,
+} from '@srcTypes/models';
+import { EWPTypes } from '@srcTypes/enums';
+
 import logger from '@util/logger.util';
+import { isEmpty, isArray, sizeOf } from '@util/core.util';
 import { pathResolve } from '@util/path.util';
+import { readfile } from '@util/fs.util';
+
 import { WordpressHelper } from '@helpers/wordpressHelper';
 
 const fetchMenuEndpoint = EWordpressFiles.menu;
@@ -12,49 +23,78 @@ const fetchPostsEndpoint = EWordpressFiles.posts;
 
 class WpRepoMock implements IWpRepo {
 
-  fetchMenu = async (): Promise<any> => {
-    const fetchUrl = pathResolve( fetchMenuEndpoint );
-    logger.info(`[fetchMenu] readFile ${JSON.stringify(fetchUrl)}`);
-    return fs.readFile(fetchUrl, (err:any, json:any) => {
-      return JSON.parse(json);
-    });
+  fetchMenu = async (): Promise<IFetchResponse> => {
+    const fetchUrl = pathResolve(fetchMenuEndpoint);
+    const action = async () => await new Promise<IFetchPostsResponse>((resolve: any, reject: any) =>
+      this.readMockfile(fetchUrl, resolve, reject)
+    );
+
+    return await action();
   }
 
-  fetchPage = async (pageSlug:string): Promise<any> => {
-    const fetchUrl = pathResolve( fetchPageEndpoint );
-    logger.info(`[fetchPage] readFile ${JSON.stringify(fetchUrl)}`);
-    return fs.readFile(fetchUrl, (err:any, json:any) => {
-      return JSON.parse(json);
-    });
+  fetchPage = async (pageSlug: string): Promise<IFetchResponse> => {
+    const fetchUrl = pathResolve(fetchPageEndpoint);
+    const action = async () => await new Promise<IFetchPostsResponse>((resolve: any, reject: any) =>
+      this.readMockfile(fetchUrl, resolve, reject)
+    );
+
+    return await action();
   };
 
-  fetchPost = async (slug:string): Promise<any> => {
-    const fetchUrl = pathResolve( fetchPostEndpoint );
-    logger.info(`[fetchPost] readFile ${JSON.stringify(fetchUrl)}`);
-    return fs.readFile(fetchUrl, (err:any, json:any) => {
-      return JSON.parse(json);
-    });
+  fetchPost = async (slug: string): Promise<IFetchResponse> => {
+    const fetchUrl = pathResolve(fetchPostEndpoint);
+    const action = async () => await new Promise<IFetchPostsResponse>((resolve: any, reject: any) =>
+      this.readMockfile(fetchUrl, resolve, reject)
+    );
+
+    return await action();
   };
 
-  fetchPosts = async (params:IFetchPostsRequest): Promise<IFetchPostsResponse> => {
-    const fetchUrl = pathResolve( fetchPostsEndpoint );
-    logger.info(`[fetchPosts] readFile ${JSON.stringify(fetchUrl)}`);
-    return new Promise<IFetchPostsResponse>((resolve:any, reject:any) => {
-      fs.readFile(fetchUrl, (err:any, json:any) => {
-        const fetchPostsResponse:IFetchPostsResponse = {};
-        if (err) {
-          fetchPostsResponse.errors = [err];
-          reject(fetchPostsResponse);
-        }
+  fetchPosts = async (params: IFetchPostsRequest): Promise<IFetchResponse> => {
+    const fetchUrl = pathResolve(fetchPostsEndpoint);
+    const action = async () => await new Promise<IFetchPostsResponse>((resolve: any, reject: any) =>
+      this.readMockfile(fetchUrl, resolve, reject)
+    );
 
-        const postItems = JSON.parse(json);
-        fetchPostsResponse.data = WordpressHelper.parsePosts(postItems);
-        fetchPostsResponse.params = params;
-        resolve(fetchPostsResponse);
-      } );
-    });
+    return await action();
   };
 
+  readMockfile = async (fetchUrl: string, onSuccess: any, onError: any): Promise<void> => {
+    const fetchPostsResponse: IFetchResponse = {
+      data: [],
+      errors: [],
+    };
+
+    const parseWP = (json: any) => {
+      const wpParsed = new WordpressHelper().objectParser(json);
+      const type = json.type || EWPTypes.unknown;
+      if (type === EWPTypes.menu) {
+        fetchPostsResponse.data = wpParsed as IWPMenu;
+      } else if (type === EWPTypes.page) {
+        fetchPostsResponse.data = wpParsed as IWPObject;
+      } else if (type === EWPTypes.post) {
+        fetchPostsResponse.data = wpParsed as IWPObject;
+      } else if (type === EWPTypes.posts) {
+        fetchPostsResponse.data = wpParsed as Array<IWPObject>;
+      } else if (!isEmpty(json) && isArray(json)) {
+        fetchPostsResponse.data = wpParsed as Array<IWPObject>;
+      } else if (!isEmpty(json) && sizeOf(json) > 0) {
+        fetchPostsResponse.data = wpParsed as IWPObject;
+      }
+
+      onSuccess(fetchPostsResponse);
+    }
+
+    const errorCatcher = (err: any) => {
+      logger.log(`[readMockfile][errorCatcher] ${JSON.stringify(err)}`);
+      if (err) {
+        fetchPostsResponse.errors.push(err);
+        onError(fetchPostsResponse);
+      }
+    }
+    
+    await readfile(fetchUrl, parseWP, errorCatcher);
+  };
 }
 
 export default WpRepoMock;

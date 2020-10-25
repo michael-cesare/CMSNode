@@ -1,52 +1,52 @@
 import WpRepo from '@repositories/wpRepo';
 import wpRepoMock from '@repositories/wpRepoMock';
 
-import { EnvConfig } from "@config/envConfig";
+import { USE_MOCK } from "@config/envConfig";
 import logger from '@util/logger.util';
-import { IFetchResponse, IFetchPostsResponse, IFetchPostsRequest, IWpRepo } from '@srcTypes/models';
-import { isEmpty } from '@util/core.util';
+import { IFetchResponse, IFetchPostsRequest, IWpRepo } from '@srcTypes/models';
+import { IPostVM, IPageVM } from '@srcTypes/viewModels';
 
 class CoreService {
   wpRepo: IWpRepo;
 
   constructor() {
-    this.wpRepo = EnvConfig.useMock ? new wpRepoMock() : new WpRepo();
+    this.wpRepo = USE_MOCK() ? new wpRepoMock() : new WpRepo();
   }
 
   fetchMenu = async (): Promise<IFetchResponse> => {
     logger.hit('[fetchMenu]');
 
-    return this.wpRepo.fetchMenu();
+    return await this.wpRepo.fetchMenu();
   };
 
-  fetchPage = async (pageSlug:string): Promise<IFetchResponse> => {
-    logger.hit(`[fetchPageAsync]: pageSlug ${pageSlug}`);
+  fetchPage = async (pageSlug:string): Promise<IPageVM> => {
+    logger.hit(`[fetchPage]: pageSlug ${pageSlug}`);
 
-    const wpPage = await this.wpRepo.fetchPage(pageSlug);
+    let message = {} as IPageVM;
+    const fetchMenuResult = await this.wpRepo.fetchMenu();
+    const fetchPageResult = await this.wpRepo.fetchPage(pageSlug);
+    message.menu = fetchMenuResult;
+    message.page = fetchPageResult;
 
-    return wpPage && wpPage.data ? wpPage.data[0] : wpPage;
+    return message;
   };
 
-  fetchPost = async (slug:string): Promise<IFetchResponse> => {
-    logger.hit(`[fetchPostAsync]: pageSlug ${slug}`);
+  fetchPosts = async (isSingle:boolean, params:IFetchPostsRequest): Promise<IPostVM> => {
+    logger.hit('[fetchPosts]');
+  
+    let message = {} as IPostVM;
+    const fetchMenuResult = await this.wpRepo.fetchMenu();
+    message.menu = fetchMenuResult;
 
-    const wpPost = await this.wpRepo.fetchPost(slug);
-
-    return wpPost && wpPost.data ? wpPost.data[0] : wpPost;
-  };
-
-  fetchPosts = async (params:IFetchPostsRequest): Promise<IFetchPostsResponse> => {
-    logger.hit('[fetchPostsByCategoryAsync]');
-    let result:Promise<IFetchPostsResponse>;
-
-    const posts = await this.wpRepo.fetchPosts(params);
-    if (isEmpty(posts.errors)) {
-      result = Promise.resolve(posts);
+    if (isSingle) {
+      const fetchPostResult = await this.wpRepo.fetchPost(params.postSlug);
+      message.post = fetchPostResult;
     } else {
-      result = Promise.reject(posts);
+      const fetchPostsResult = await this.wpRepo.fetchPosts(params);
+      message.posts = fetchPostsResult;
     }
-
-    return result;
+  
+    return message;
   };
 
 }

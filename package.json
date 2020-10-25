@@ -11,7 +11,7 @@
     "build": "tsc -p . && npm run html",
     "test": "npm run build",
     "prepack": "npm i && npm run build",
-    "html": "copyfiles pages/**/*.html mock/**/*.json  dist/"
+    "html": "copyfiles pages/**/*.html mock/**/*.json public/**/*.* dist/"
   },
   "_moduleAliases": {
     "@config": "dist/config",
@@ -37,10 +37,12 @@
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.2",
     "isomorphic-fetch": "^3.0.0",
+    "module-alias": "^2.2.2",
     "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/isomorphic-fetch": "0.0.35",
+    "@types/node-fetch": "^2.5.7",
     "copyfiles": "^2.4.0",
     "rimraf": "3.0.2",
     "tslib": "^2.0.3",
