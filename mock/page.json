@@ -1,5 +1,4 @@
-[
-  {
+{
     "id": 2,
     "date": "2019-09-17T08:40:50",
     "modified": "2020-10-25T13:49:03",
@@ -8,7 +7,7 @@
     "type": "page",
     "link": "https:\/\/wordpress.homes.com:5050\/home-page\/",
     "title": "Home in Malta",
-    "content": "<p>hi.<\/p>\n",
+    "content": "<pageContent><div class=\"bg-image\" style=\"background-image: url(https:\/\/i.insider.com\/5ad8e2b9bd967120008b4656)\"><div class=\"overlay\"><\/div><div class=\"pad-section relative\"><h2 style=\"text-align: center;\">Home Instead Senior Care presents<\/h2><p>&nbsp;<\/p><p style=\"text-align: center;\">Personalised senior care and lifestyle services to help you live your best<\/p><h3 style=\"text-align: center;\">Live well at home, your way with Home Instead<\/h3><p style=\"text-align: center;\">We understand that home is where you feel the happiest. If you want to stay living comfortably at home, you can live well, your way with Home Instead.<\/p><\/div><\/div></pageContent>\n",
     "excerpt": "<p>hi.<\/p>\n",
     "author": 1,
     "parent": 0,
@@ -25,4 +24,3 @@
       }
     }
   }
-]

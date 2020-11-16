@@ -12,7 +12,9 @@ node_modules
 # Build Directory
 dist/
 dist
+public/dist
 
 # Mapping files
 ./**/**.**.map
 ./**/*.**.map
+
