@@ -24,3 +24,20 @@ services: business logic for the applications. Connects all respositories into s
 types: Models, interfaces, classes, Enums, Types, and definitions.<br/>
 util:    libraries and utilities that extend classes, third party libraries, or packages.<br/>
 
+# build project
+
+1. To build project artifacts
+
+```sh
+npm run build
+```
+
+
+# run project
+
+1. To run Locally
+
+```sh
+npm run start
+```
+

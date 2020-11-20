@@ -14,6 +14,8 @@ interface IWPSet {
 
 export class WordpressHelper {
   private valueSet: IWPSet;
+  private acfTemplateSet: IWPSet;
+  private acfSet: IWPSet;
   private wordpressSet: IWPSet;
   private menuSet: IWPSet;
   private postSet: IWPSet;
@@ -24,6 +26,15 @@ export class WordpressHelper {
   
   constructor () {
     this.valueSet = { type: { name: 'Value' } };
+    this.acfTemplateSet = {
+      order: { name: 'order' },
+      content: { name: 'content' },
+      place_holder: { name: 'placeHolder' },
+      type: { name: 'type' },
+    };
+    this.acfSet = {
+      page_templates: { name: 'pageTemplates', func: this.parseItem, params: this.acfTemplateSet },
+    };
     this.postSet = {
       ID: { name: 'id' },
       post_name: { name: 'name' },
@@ -43,6 +54,7 @@ export class WordpressHelper {
       title: { name: 'title' },
       content: { name: 'content' },
       excerpt: { name: 'excerpt' },
+      acf: { name: 'advanceFields', func: this.parseItem, params: this.acfSet },
     };
     this.postsSet = {
       posts:  { name: 'posts', func: this.parseItem, params: this.postSet },
