@@ -17,6 +17,7 @@ export interface IWPObject extends IObject {
   title: string;
   content: string;
   excerpt: string;
+  advanceFields?: IAdvanceField;
 }
 
 export interface IWPPost extends IWPObject {
@@ -26,6 +27,31 @@ export interface IWPPage extends IWPObject {
 }
 
 export interface IFetchRequest {
+}
+
+export interface IAdvanceField {
+  pageTemplates: Array<IPageTemplate>,
+}
+
+export interface ICardInfo {
+  title: string,
+  image: string,
+  text: string,
+  buttonLink: string,
+}
+
+export interface IPageTemplate {
+  order: number,
+  placeHolder: string,
+  type: string,
+}
+
+export interface IPageTemplateCardInfo extends IPageTemplate {
+  content: ICardInfo,
+}
+
+export interface IPageTemplateBgImage extends IPageTemplate {
+  content: string,
 }
 
 export interface IFetchResponse {
@@ -59,4 +85,11 @@ export interface IWpRepo {
   fetchPage: (pageSlug: string) => Promise<IFetchResponse>,
   fetchPost: (slug: string) => Promise<IFetchResponse>,
   fetchPosts: (params: IFetchPostsRequest) => Promise<IFetchResponse>,
+}
+
+export interface IWPCard {
+  title: number;
+  image: number;
+  text: string;
+  buttonLink: string;
 }

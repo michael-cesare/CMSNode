@@ -1,10 +1,11 @@
 import { isEmpty, isArray, sizeOf } from '@util/core.util';
 import { IWPObject, IWPMenu } from '@srcTypes/models';
 import { EWPTypes } from '@srcTypes/enums';
+import { WpAcfHelper } from './wpAcfHelper';
 
 interface IWPProperties {
   name: string;
-  func?: ( message: any, collection: IWPSet ) => void;
+  func?: (message: any, collection: IWPSet) => void;
   params?: IWPSet;
 }
 
@@ -12,8 +13,12 @@ interface IWPSet {
   [key: string]: IWPProperties;
 }
 
+/**
+ * Generic helper for all wordpresss objects
+ */
 export class WordpressHelper {
   private valueSet: IWPSet;
+  private acfSet: IWPSet;
   private wordpressSet: IWPSet;
   private menuSet: IWPSet;
   private postSet: IWPSet;
@@ -21,9 +26,12 @@ export class WordpressHelper {
   private postsSet: IWPSet;
   private menuItemSet: IWPSet;
   private taxonomyTermsSet: IWPSet;
-  
-  constructor () {
+
+  constructor() {
     this.valueSet = { type: { name: 'Value' } };
+    this.acfSet = {
+      page_templates: { name: 'pageTemplates' },
+    };
     this.postSet = {
       ID: { name: 'id' },
       post_name: { name: 'name' },
@@ -43,9 +51,10 @@ export class WordpressHelper {
       title: { name: 'title' },
       content: { name: 'content' },
       excerpt: { name: 'excerpt' },
+      acf: { name: 'advanceFields', func: this.parseAcf, params: this.acfSet },
     };
     this.postsSet = {
-      posts:  { name: 'posts', func: this.parseItem, params: this.postSet },
+      posts: { name: 'posts', func: this.parseItem, params: this.postSet },
     };
     this.taxonomyTermsSet = {
       term_id: { name: 'id' },
@@ -75,14 +84,33 @@ export class WordpressHelper {
       posts: { name: 'posts', func: this.parseItem, params: this.menuItemSet },
     };
     this.wordpressSet = {
-      type:  { name: 'type', func: this.parseItem, params: this.valueSet },
-      menu:  { name: 'menu', func: this.parseItem, params: this.menuSet },
-      post:  { name: 'post', func: this.parseItem, params: this.postSet },
-      page:  { name: 'page', func: this.parseItem, params: this.pageSet },
+      type: { name: 'type', func: this.parseItem, params: this.valueSet },
+      menu: { name: 'menu', func: this.parseItem, params: this.menuSet },
+      post: { name: 'post', func: this.parseItem, params: this.postSet },
+      page: { name: 'page', func: this.parseItem, params: this.pageSet },
       posts: { name: 'posts', func: this.parseItem, params: this.postsSet },
-    };    
+    };
   }
-  
+
+  /**
+   * Parser for Acf and all sub attributes.
+   * Each sub attribute should use another helper as consistency. 
+   * @param jsonData raw json data
+   * @param collection collected defiend by the Set
+   */
+  private parseAcf = (jsonData: any, collection: IWPSet): any => {
+    if (!jsonData) {
+      return jsonData;
+    }
+
+    // acfSet must be left with name only, then parse the sub attribute in the helper below
+    const advanceFields = this.parseItem(jsonData, collection);
+    // pageTemplates sub attribute helper
+    const advanceFieldsParsed = new WpAcfHelper().parseAcf(advanceFields);
+
+    return advanceFieldsParsed;
+  }
+
   /**
    * Decrypts an Object with a set of keys.
    *
@@ -90,40 +118,40 @@ export class WordpressHelper {
    * @param {object} collection The set of keys with its collection and options
    * @returns {object}
    */
-  private parseItem = ( jsonData: any, collection: IWPSet ): Array<IWPObject> | IWPMenu | IWPObject | undefined => {
-    if ( !jsonData ) {
+  private parseItem = (jsonData: any, collection: IWPSet): any => {
+    if (!jsonData) {
       return jsonData;
     }
 
-    const response = Object.assign( {}, jsonData );
-    Object.keys( collection )
-      .forEach( ( key ) => {
+    const response = Object.assign({}, jsonData);
+    Object.keys(collection)
+      .forEach((key) => {
         const { name, params, func }: IWPProperties = collection[key];
         let keyToParse: string = key;
         let keyParse: string = name;
 
         const thisObject = jsonData[keyToParse];
 
-        if ( jsonData[keyToParse] !== undefined ) {
+        if (jsonData[keyToParse] !== undefined) {
           delete response[keyToParse];
-          if ( params && func ) {
-            if ( thisObject instanceof Array ) {
-              response[keyParse] = thisObject.map( ( item ) => func( item, params ) );
+          if (params && func) {
+            if (thisObject instanceof Array) {
+              response[keyParse] = thisObject.map((item) => func(item, params));
             } else {
-              response[keyParse] = func( thisObject, params );
+              response[keyParse] = func(thisObject, params);
             }
           } else {
             response[keyParse] = thisObject;
           }
         }
-      } );
+      });
 
     return response;
   };
 
   /**
    * Decrypts an Object being passed on
-   * @param {object} message - The Json data to be parsed
+   * @param {object} json - The Json data to be parsed
    * @returns {object}
    */
   public objectParser(json: any): Array<IWPObject> | IWPMenu | IWPObject | undefined {
@@ -149,7 +177,7 @@ export class WordpressHelper {
       // if ( eventType === EWPTypes.Custom ) {
     }
 
-    return this.parseItem( json, objectSet );
-  } 
+    return this.parseItem(json, objectSet);
+  }
 
 }

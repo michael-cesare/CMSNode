@@ -24,3 +24,9 @@ export enum EWPTypes {
   page = 'page',
   unknown = 'unknown',
 }
+
+export enum EWPAcfTemplateTypes {
+  cards = 'cards',
+  bgImage = 'bg-image',
+  unknown = 'unknown',
+}
