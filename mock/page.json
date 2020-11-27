@@ -7,7 +7,7 @@
     "type": "page",
     "link": "https:\/\/wordpress.homes.com:5050\/home-page\/",
     "title": "Home in Malta",
-    "content": "<pageContent>[[bg-image]][[cards]][[bg-image]]</pageContent>\n",
+    "content": "<pageContent>[[bg-image]][[paragraphs]][[cards]][[bg-image]]</pageContent>\n",
     "excerpt": "<p>hi.<\/p>\n",
     "author": 1,
     "parent": 0,
@@ -20,9 +20,62 @@
           "content": "<div class=\"bg-image\" style=\"background-image: url(https:\/\/i.insider.com\/5ad8e2b9bd967120008b4656)\"><div class=\"overlay\"><\/div><div class=\"pad-section relative\"><h2 style=\"text-align: center;\">Home Instead Senior Care presents<\/h2><p>&nbsp;<\/p><p style=\"text-align: center;\">Personalised senior care and lifestyle services to help you live your best<\/p><h3 style=\"text-align: center;\">Live well at home, your way with Home Instead<\/h3><p style=\"text-align: center;\">We understand that home is where you feel the happiest. If you want to stay living comfortably at home, you can live well, your way with Home Instead.<\/p><\/div><\/div>\n",
           "place_holder": "bg-image",
           "type": "bg-image"
-        }, 
+        },
         {
           "order": 2,
+          "content": [
+            {
+              "text": "<p>We understand that home is where you feel the happiest. If you want to stay living comfortably at home, you can live well, your way with Home Instead.</p>",
+              "style": {
+                "color": "rgba(255,255,255,1)",
+                "padding": "1rem",
+                "font_size": "1.2rem"
+              }
+            },
+            {
+              "text": "<p>Home Instead has been at the forefront of specialised home care for the elderly and supporting those being cared for and their families for many years. Founded on personal experience, these family values remain at the core of everything we do 24 years on.</p>",
+              "style": {
+                "color": "rgba(255,255,255,1)",
+                "padding": "1rem",
+                "font_size": "1.2rem"
+              }
+            },
+            {
+              "text": "<p>We believe age should be celebrated and that everybody should be able to live happily, comfortably and independently at home.</p>",
+              "style": {
+                "color": "rgba(255,255,255,1)",
+                "padding": "1rem",
+                "font_size": "1.2rem"
+              }
+            },
+            {
+              "text": "<p>Start your Home Instead journey today.</p>",
+              "style": {
+                "color": "rgba(255,255,255,1)",
+                "padding": "1rem",
+                "font_size": "1.2rem"
+              }
+            }
+          ],
+          "place_holder": "paragraphs",
+          "type": "paragraphs",
+          "title": {
+            "text": "Live well at home, your way with Home Instead",
+            "style": {
+              "color": "rgba(255,255,255,1)",
+              "padding": "1rem",
+              "font_size": "2.2rem"
+            }
+          },
+          "style": {
+            "background_color": "rgba(0,0,0,1)",
+            "color": "rgba(255,255,255,1)",
+            "padding": "1rem",
+            "font_size": "1.5rem"
+          }
+        },
+        {
+          "order": 3,
           "content": [
             {
               "title": "Card Title",
@@ -41,7 +94,7 @@
           "type": "cards"
         },
         {
-          "order": 3,
+          "order": 4,
           "content": "<div class=\"bg-image\" style=\"background-image: url(https:\/\/www.seniorlivingarrangements.com\/wp-content\/uploads\/2018\/01\/Elderly-Day-Care-Facility.jpg)\"><div class=\"overlay\"><\/div><div class=\"pad-section relative\"><h2 style=\"text-align: center;\">Home Instead Senior Care presents<\/h2><p>&nbsp;<\/p><p style=\"text-align: center;\">Personalised senior care and lifestyle services to help you live your best<\/p><h3 style=\"text-align: center;\">Live well at home, your way with Home Instead<\/h3><p style=\"text-align: center;\">We understand that home is where you feel the happiest. If you want to stay living comfortably at home, you can live well, your way with Home Instead.<\/p><\/div><\/div>\n",
           "place_holder": "bg-image",
           "type": "bg-image"

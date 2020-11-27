@@ -1,6 +1,6 @@
 import { isEmpty, sizeOf } from '@util/core.util';
 import { IWPObject, IWPMenu } from '@srcTypes/models';
-import { EWPAcfTemplateTypes } from '@srcTypes/enums';
+import { EDomTypes } from '@srcTypes/enums';
 
 interface IWPProperties {
   name: string;
@@ -16,17 +16,28 @@ interface IWPSet {
  * Generic helper for all wordpresss ACF attributes objects
  */
 export class WpAcfHelper {
+  private styleSet: IWPSet;
   private cardSet: IWPSet;
   private bgImageSet: IWPSet;
   private cardsSet: IWPSet;
   private acfSet: IWPSet;
+  private paragraphsTitleSet: IWPSet;
+  private paragraphSet: IWPSet;
+  private paragraphsSet: IWPSet;
 
   constructor() {
+    this.styleSet = {
+      background_color: { name: 'backgroundColor' },
+      padding: { name: 'padding' },
+      color: { name: 'color' },
+      font_size: { name: 'fontSize' },
+    };
     this.cardSet = {
       title: { name: 'title' },
       image: { name: 'image' },
       text: { name: 'text' },
       button_link: { name: 'buttonLink' },
+      style: { name: 'style' , func: this.parseItem, params: this.styleSet },
     };
     this.bgImageSet = {
       order: { name: 'order' },
@@ -38,11 +49,32 @@ export class WpAcfHelper {
       order: { name: 'order' },
       content: { name: 'content', func: this.parseItem, params: this.cardSet },
       place_holder: { name: 'placeHolder' },
+      style: { name: 'style' , func: this.parseItem, params: this.styleSet },
+    };
+    this.paragraphsTitleSet = {
+      text: { name: 'text' },
+      style: { name: 'style' , func: this.parseItem, params: this.styleSet },
+    };
+    this.paragraphSet = {
+      text: { name: 'text' },
       type: { name: 'type' },
+      style: { name: 'style' , func: this.parseItem, params: this.styleSet },
+    };
+    this.paragraphsSet = {
+      order: { name: 'order' },
+      content: { name: 'content', func: this.parseItem, params: this.paragraphSet },
+      place_holder: { name: 'placeHolder' },
+      title: { name: 'title', func: this.parseItem, params: this.paragraphsTitleSet },
+      type: { name: 'type' },
+      style: { name: 'style' , func: this.parseItem, params: this.styleSet },
     };
     // Define sub attribtues to the ACF. use only Name for this
     this.acfSet = {
       pageTemplates: { name: 'pageTemplates' },
+      // Todo - add settings to the page
+      // settings: { name: 'settings' .... },
+      // Todo - add newsFeed to the page
+      // newsFeed: { name: 'newsFeed' .... },
     };
   }
 
@@ -92,15 +124,17 @@ export class WpAcfHelper {
   private parseAcfAttribute(json: any): Array<any> {
     let response: Array<any> = [];
     json.forEach((data: any) => {
-      const acfTempplateType = data.type || EWPAcfTemplateTypes.unknown;
+      const acfTempplateType = data.type || EDomTypes.unknown;
 
       let objectSet: IWPSet = {};
       if (!isEmpty(data)) {
         // special type - menu
-        if (sizeOf(data) > 0 && acfTempplateType === EWPAcfTemplateTypes.cards) {
+        if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.cards) {
           objectSet = this.cardsSet;
-        } else if (sizeOf(data) > 0 && acfTempplateType === EWPAcfTemplateTypes.bgImage) {
+        } else if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.bgImage) {
           objectSet = this.bgImageSet;
+        } else if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.paragraphs) {
+          objectSet = this.paragraphsSet;
         }
       }
 
