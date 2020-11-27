@@ -1,3 +1,5 @@
+//  -------------    WordPress Objects    -------------------
+
 export interface IObject {
 }
 
@@ -26,32 +28,14 @@ export interface IWPPost extends IWPObject {
 export interface IWPPage extends IWPObject {
 }
 
-export interface IFetchRequest {
-}
-
 export interface IAdvanceField {
   pageTemplates: Array<IPageTemplate>,
 }
 
-export interface ICardInfo {
-  title: string,
-  image: string,
-  text: string,
-  buttonLink: string,
-}
 
-export interface IPageTemplate {
-  order: number,
-  placeHolder: string,
-  type: string,
-}
+//  -------------    Wordpress Request and Response    -------------------
 
-export interface IPageTemplateCardInfo extends IPageTemplate {
-  content: ICardInfo,
-}
-
-export interface IPageTemplateBgImage extends IPageTemplate {
-  content: string,
+export interface IFetchRequest {
 }
 
 export interface IFetchResponse {
@@ -80,6 +64,60 @@ export interface IFetchPostsResponse extends IFetchResponse {
   searchCount: number;
 }
 
+
+//  -------------    ACF PageTemplates Objects   -------------------
+
+export interface ICardInfo {
+  title: string,
+  image: string,
+  text: string,
+  buttonLink: string,
+}
+
+export interface IParagraph {
+  text: string,
+  style: IStyle,
+}
+
+export interface IParagraphsTitle {
+  text: string,
+  style?: IStyle,
+}
+
+//  -------------    ACF PageTemplates    -------------------
+
+/**
+ * Every ACF in page_template, must have the listed attibutes as a base object
+ * 
+ * order       order to sort the component for viewing
+ * placeHolder text in wordpress page content to be replaced by this page template content
+ * type        type to define sub type of acf. sometimes it's value is the same as placeholder.
+ *             There is also a specific parser for each different type to generate html.
+ * style       General Syling for the component, this is optional.
+ */
+export interface IPageTemplate {
+  order: number,
+  placeHolder: string,
+  type: string,
+  style?: IStyle,
+}
+
+export interface IPageTemplateCardInfo extends IPageTemplate {
+  content: Array<ICardInfo>,
+}
+
+export interface IPageTemplateParagraphs extends IPageTemplate {
+  content: Array<IParagraph>,
+  title: IParagraphsTitle,
+}
+
+export interface IPageTemplateBgImage extends IPageTemplate {
+  content: string,
+}
+
+
+//  -------------    Repositories Interfaces   -------------------
+
 export interface IWpRepo {
   fetchMenu: () => Promise<IFetchResponse>,
   fetchPage: (pageSlug: string) => Promise<IFetchResponse>,
@@ -87,9 +125,12 @@ export interface IWpRepo {
   fetchPosts: (params: IFetchPostsRequest) => Promise<IFetchResponse>,
 }
 
-export interface IWPCard {
-  title: number;
-  image: number;
-  text: string;
-  buttonLink: string;
+
+//  -------------    OTHER  Objects   -------------------
+
+export interface IStyle {
+  backgroundColor: string,
+  padding: string,
+  color: string,
+  fontSize: string,
 }
