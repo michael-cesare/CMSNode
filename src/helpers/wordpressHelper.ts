@@ -25,7 +25,6 @@ export class WordpressHelper {
   private pageSet: IWPSet;
   private postsSet: IWPSet;
   private menuItemSet: IWPSet;
-  private taxonomyTermsSet: IWPSet;
 
   constructor() {
     this.valueSet = { type: { name: 'Value' } };
@@ -56,32 +55,21 @@ export class WordpressHelper {
     this.postsSet = {
       posts: { name: 'posts', func: this.parseItem, params: this.postSet },
     };
-    this.taxonomyTermsSet = {
-      term_id: { name: 'id' },
-      slug: { name: 'slug' },
-      name: { name: 'name' },
-      term_taxonomy_id: { name: 'termTaxonomyId' },
-      taxonomy: { name: 'taxonomy' },
-    };
     this.menuItemSet = {
       ID: { name: 'id' },
-      post_content: { name: 'content' },
-      title: { name: 'title' },
-      post_title: { name: 'postTitle' },
-      post_excerpt: { name: 'excerpt' },
-      post_name: { name: 'name' },
-      post_parent: { name: 'parent' },
+      post_parent: { name: 'postParent' },
       menu_order: { name: 'order' },
-      post_type: { name: 'type' },
-      author: { name: 'author' },
-      post_taxonomy_terms: { name: 'taxonomyTerms', func: this.parseItem, params: this.taxonomyTermsSet },
+      menu_parent: { name: 'menuParent' },
+      title: { name: 'title' },
+      url: { name: 'url' },
+      slug: { name: 'slug' },
+      route: { name: 'route' },
+      // @ts-ignore: this.menuItemSet is really assigned before being used as it is recursive
+      menu: { name: 'menu', func: this.parseItem, params: this.menuItemSet },
     };
     this.menuSet = {
       type: { name: 'type' },
-      found_posts: { name: 'foundPosts' },
-      post_count: { name: 'postCount' },
-      max_num_pages: { name: 'maxNumPages' },
-      posts: { name: 'posts', func: this.parseItem, params: this.menuItemSet },
+      menu: { name: 'menu', func: this.parseItem, params: this.menuItemSet },
     };
     this.wordpressSet = {
       type: { name: 'type', func: this.parseItem, params: this.valueSet },
