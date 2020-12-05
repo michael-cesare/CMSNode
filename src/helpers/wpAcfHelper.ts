@@ -13,7 +13,9 @@ interface IWPSet {
 }
 
 /**
- * Generic helper for all wordpresss ACF attributes objects
+ * Generic helper for all wordpresss ACF attributes objects.
+ * ACF in this project are used for different reasons, so use sub ACF wisely.
+ * Since ACF can grow alot, it was best to seperate it from the main helpers.
  */
 export class WpAcfHelper {
   private styleSet: IWPSet;
@@ -70,11 +72,10 @@ export class WpAcfHelper {
     };
     // Define sub attribtues to the ACF. use only Name for this
     this.acfSet = {
+      // ACF pageTemplates are used to memic React components.
       pageTemplates: { name: 'pageTemplates' },
-      // Todo - add settings to the page
+      // TODO - add settings to the page, this will control overall settings of the page, can also have global variables such as company address, contact, or URLs
       // settings: { name: 'settings' .... },
-      // Todo - add newsFeed to the page
-      // newsFeed: { name: 'newsFeed' .... },
     };
   }
 
@@ -136,6 +137,20 @@ export class WpAcfHelper {
         } else if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.paragraphs) {
           objectSet = this.paragraphsSet;
         }
+        // TODO - add newsFeed to the page, this will reuse this.cardSet, might replace this.cardsSet. use it as latest/top blogs with sammery in it.
+        // if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.newsFeed) {
+
+        // TODO - add Thumbnails to the page, similar to cards but it will be just an image with title in the footer. and action link to pages.
+        // if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.Thumbnails) {
+
+        // TODO - wpPosts - blog, careers, stories, other posttypes - this is to know that the component is using wordpress posts.
+        //        use subType to know how to display the wordpress posts
+        // if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.wpPosts) {
+        //    if (data.postType === EDomTypes.posts || data.postType === EDomTypes.careers) { <-- might not be required      
+        //       if (data.subType === EDomTypes.Thumbnails) {
+
+        // TODO - add shortcuts to the page, use Thumbnails for navigating to other pages.
+        // if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.shortcuts) {
       }
 
       if (!isEmpty(objectSet)) {

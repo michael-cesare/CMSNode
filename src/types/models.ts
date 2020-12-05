@@ -5,10 +5,7 @@ export interface IObject {
 
 export interface IWPMenu extends IObject {
   type: string;
-  foundPosts: string;
-  postCount: number;
-  maxNumPages: number;
-  posts: Array<any>;
+  menu: Array<IMenuItem>;
 }
 
 export interface IWPObject extends IObject {
@@ -133,4 +130,16 @@ export interface IStyle {
   padding: string,
   color: string,
   fontSize: string,
+}
+
+export interface IMenuItem {
+  id: number,
+  postParent: number,
+  menuOrder: number,
+  menuParent: number,
+  title: string,
+  url: string,
+  slug: string,
+  route: string,
+  menu: Array<IMenuItem>;
 }
