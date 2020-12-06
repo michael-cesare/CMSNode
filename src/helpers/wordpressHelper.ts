@@ -33,26 +33,30 @@ export class WordpressHelper {
     };
     this.postSet = {
       ID: { name: 'id' },
-      post_name: { name: 'name' },
-      post_parent: { name: 'parent' },
       slug: { name: 'slug' },
       date: { name: 'date' },
       type: { name: 'type' },
+      link: { name: 'link' },
       post_title: { name: 'title' },
       post_content: { name: 'content' },
       excerpt: { name: 'excerpt' },
+      thumbnail: { name: 'thumbnail' },
     };
     this.pageSet = {
       id: { name: 'id' },
       slug: { name: 'slug' },
       date: { name: 'date' },
       type: { name: 'type' },
+      link: { name: 'link' },
       title: { name: 'title' },
       content: { name: 'content' },
       excerpt: { name: 'excerpt' },
       acf: { name: 'advanceFields', func: this.parseAcf, params: this.acfSet },
     };
     this.postsSet = {
+      post_count: { name: 'postCount' },
+      found_posts: { name: 'foundPosts' },
+      max_num_pages: { name: 'maxNumPages' },
       posts: { name: 'posts', func: this.parseItem, params: this.postSet },
     };
     this.menuItemSet = {

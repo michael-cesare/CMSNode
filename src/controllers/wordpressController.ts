@@ -5,7 +5,7 @@ import coreService from '@services/coreService';
 
 import ResponseHelper from '@helpers/ResponseHelper';
 import logger from '@util/logger.util';
-import { isNullOrUndefined } from '@util/core.util';
+import { isNullOrUndefined, isEmpty } from '@util/core.util';
 import { IFetchPostsRequest } from '@srcTypes/models';
 
 const wordpressRouter = express.Router();
@@ -39,10 +39,19 @@ class WordpressController {
     }
   };
 
+  /**
+   * Route that handles plain pages only.
+   * Pages may have dynamic data that requires posts, this will be handled by the coreService.
+   * @param req 
+   * @param res 
+   * @param next 
+   */
   public async HandlePageRequest(req: Request, res: Response, next: any): Promise<void> {
     try {
-      const pageSlug = 'wordpress-page';
-      const fetchPageResult = await coreService.fetchPage(pageSlug);
+      const { pageSlug } = req.params;
+      const slug = isNullOrUndefined(pageSlug) || isEmpty(pageSlug) ? '': pageSlug;
+
+      const fetchPageResult = await coreService.fetchPage(slug);
 
       ResponseHelper.WriteResult(res, fetchPageResult);
     } catch (e) {
@@ -53,31 +62,42 @@ class WordpressController {
     }
   };
 
-  public async HandlePostRequest(req: Request, res: Response, next: any): Promise<void> {
+  /**
+   * Route that handles both single and listing pages for any post types.
+   * It specifically designed for wordpress post types.
+   */
+  public async HandlePostPageRequest(req: Request, res: Response, next: any): Promise<void> {
+    
     try {
       const { postType, postSlug } = req.params;
+      // route requires posttype.. make sure its present, else go to next route.
+      if (isNullOrUndefined(postType) || isEmpty(postType)) {
+        next()
+      } else {
+        const isList = isEmpty(postSlug) && isNullOrUndefined(postSlug);
+        const postsParams: IFetchPostsRequest = {
+          postType,
+          postSlug,
+          searchCount: 0,
+          sortOrder: '',
+          pageSize: 99,
+          pageIndex: 0,
+          termSlugs: '',
+          taxonomy: '',
+        };
+        const fetchPostsResult = await coreService.fetchPostsPage(isList, postsParams);
 
-      if (isNullOrUndefined(postType)) {
-        res.sendStatus(500);
+        // if the post type does not exists in wordpress, exist route and try next() one
+        if (isEmpty(fetchPostsResult)) {
+          next()
+        }
+
+        ResponseHelper.WriteResult(res, fetchPostsResult);
+        res.end();
       }
-      const isSingle = (isNullOrUndefined(postSlug));
-      const postsParams: IFetchPostsRequest = {
-        postType,
-        postSlug,
-        searchCount: 0,
-        sortOrder: '',
-        pageSize: 99,
-        pageIndex: 0,
-        termSlugs: '',
-        taxonomy: '',
-      };
-      const fetchPostsResult = await coreService.fetchPosts(isSingle, postsParams);
-
-      ResponseHelper.WriteResult(res, fetchPostsResult);
     } catch (e) {
-      logger.info(`[Error][HandlePostRequest] ${JSON.stringify(req.params)}`);
+      logger.info(`[Error][HandlePostRequest] ${JSON.stringify(req.params)} ${JSON.stringify(e)}`);
       ResponseHelper.WriteError(res, e);
-    } finally {
       res.end();
     }
   };
@@ -86,9 +106,11 @@ class WordpressController {
 // Create a Home Instance as singleton
 const wordpressController = new WordpressController();
 
+// List of Routes to be mapped with the controller above.
+
 wordpressRouter.get('/menu', asyncMiddleware(wordpressController.HandleMenuRequest));
 wordpressRouter.get('/home', asyncMiddleware(wordpressController.HandleHomeRequest));
-wordpressRouter.get('/:postType(posts|careers)(/:postSlug)?', asyncMiddleware(wordpressController.HandlePostRequest));
+wordpressRouter.get('/:postType/:postSlug?', asyncMiddleware(wordpressController.HandlePostPageRequest));
 wordpressRouter.get('/:pageSlug', asyncMiddleware(wordpressController.HandlePageRequest));
 wordpressRouter.get('/', asyncMiddleware(wordpressController.HandleHomeRequest));
 

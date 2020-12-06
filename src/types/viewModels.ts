@@ -4,6 +4,7 @@ export interface IPostVM {
   menu: IFetchResponse;
   post: IFetchResponse;
   posts: IFetchResponse;
+  page: IFetchResponse;
 }
 
 export interface IPageVM {

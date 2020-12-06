@@ -1,0 +1,17 @@
+{
+    "id": 2,
+    "date": "2019-09-17T08:40:50",
+    "modified": "2020-10-25T13:49:03",
+    "slug": "careers-detail",
+    "status": "publish",
+    "type": "page",
+    "link": "https:\/\/wordpress.homes.com:5050\/careers\/single",
+    "title": "Careers in Malta",
+    "content": "<pageContent>careers-detail</pageContent>",
+    "excerpt": "<p>careers-detail<\/p>\n",
+    "author": 1,
+    "parent": 0,
+    "menuOrder": 0,
+    "template": "post-detail.php",
+    "acf": {}
+  }

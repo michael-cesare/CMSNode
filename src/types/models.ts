@@ -6,6 +6,7 @@ export interface IObject {
 export interface IWPMenu extends IObject {
   type: string;
   menu: Array<IMenuItem>;
+  postTypes: Array<string>;
 }
 
 export interface IWPObject extends IObject {
@@ -16,13 +17,15 @@ export interface IWPObject extends IObject {
   title: string;
   content: string;
   excerpt: string;
-  advanceFields?: IAdvanceField;
 }
 
 export interface IWPPost extends IWPObject {
+  link: string;
+  thumbnail: string;
 }
 
 export interface IWPPage extends IWPObject {
+  advanceFields?: IAdvanceField;
 }
 
 export interface IAdvanceField {

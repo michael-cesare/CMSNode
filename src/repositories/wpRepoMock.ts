@@ -6,8 +6,9 @@ import {
   IFetchResponse,
   IWpRepo,
   IWPMenu,
+  IError,
 } from '@srcTypes/models';
-import { EWPTypes } from '@srcTypes/enums';
+import { EWPTypes, EErrorsCodes } from '@srcTypes/enums';
 
 import logger from '@util/logger.util';
 import { isEmpty, isArray, sizeOf } from '@util/core.util';
@@ -25,35 +26,38 @@ class WpRepoMock implements IWpRepo {
 
   fetchMenu = async (): Promise<IFetchResponse> => {
     const fetchUrl = pathResolve(fetchMenuEndpoint);
-    const action = async () => await new Promise<IFetchPostsResponse>((resolve: any, reject: any) =>
-      this.readMockfile(fetchUrl, resolve, reject)
+    const action = async () => await new Promise<IFetchPostsResponse>((resolve: any) =>
+      this.readMockfile(fetchUrl, resolve, resolve)
     );
 
     return await action();
   }
 
   fetchPage = async (pageSlug: string): Promise<IFetchResponse> => {
-    const fetchUrl = pathResolve(fetchPageEndpoint);
-    const action = async () => await new Promise<IFetchPostsResponse>((resolve: any, reject: any) =>
-      this.readMockfile(fetchUrl, resolve, reject)
+    const fetchPageEndpointSlug = fetchPageEndpoint.replace(`{{page}}`, pageSlug);
+    const fetchUrl = pathResolve(fetchPageEndpointSlug);
+    const action = async () => await new Promise<IFetchPostsResponse>((resolve: any) =>
+      this.readMockfile(fetchUrl, resolve, resolve)
     );
 
     return await action();
   };
 
   fetchPost = async (slug: string): Promise<IFetchResponse> => {
-    const fetchUrl = pathResolve(fetchPostEndpoint);
-    const action = async () => await new Promise<IFetchPostsResponse>((resolve: any, reject: any) =>
-      this.readMockfile(fetchUrl, resolve, reject)
+    const fetchPostEndpointSlug = fetchPostEndpoint.replace(`{{post}}`, slug);
+    const fetchUrl = pathResolve(fetchPostEndpointSlug);
+    const action = async () => await new Promise<IFetchPostsResponse>((resolve: any) =>
+      this.readMockfile(fetchUrl, resolve, resolve)
     );
 
     return await action();
   };
 
   fetchPosts = async (params: IFetchPostsRequest): Promise<IFetchResponse> => {
-    const fetchUrl = pathResolve(fetchPostsEndpoint);
-    const action = async () => await new Promise<IFetchPostsResponse>((resolve: any, reject: any) =>
-      this.readMockfile(fetchUrl, resolve, reject)
+    const fetchPostEndpointSlug = fetchPostsEndpoint.replace(`{{posts}}`, params.postType);
+    const fetchUrl = pathResolve(fetchPostEndpointSlug);
+    const action = async () => await new Promise<IFetchPostsResponse>((resolve: any) =>
+      this.readMockfile(fetchUrl, resolve, resolve)
     );
 
     return await action();
@@ -88,13 +92,26 @@ class WpRepoMock implements IWpRepo {
     const errorCatcher = (err: any) => {
       logger.log(`[readMockfile][errorCatcher] ${JSON.stringify(err)}`);
       if (err) {
-        fetchPostsResponse.errors.push(err);
+        const errorQueue: IError = {
+          code: this.readErrorCode(err.code),
+          info: err.errno,
+        };
+        fetchPostsResponse.errors.push(errorQueue);
         onError(fetchPostsResponse);
       }
     }
     
     await readfile(fetchUrl, parseWP, errorCatcher);
   };
+
+  private readErrorCode = (err: string): string => {
+    let errorMap = err
+    if (err === 'ENOENT') {
+      errorMap = EErrorsCodes.FileNotFound
+    }
+
+    return errorMap;
+  }
 }
 
 export default WpRepoMock;

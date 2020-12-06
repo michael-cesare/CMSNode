@@ -4,8 +4,9 @@ import { EWordpressEndpoints } from '@srcTypes/enums'; import {
   IFetchResponse,
   IWpRepo,
   IWPMenu,
+  IError,
 } from '@srcTypes/models';
-import { EWPTypes } from '@srcTypes/enums';
+import { EWPTypes, EErrorsCodes } from '@srcTypes/enums';
 
 import { formatUrl } from '@util/url.util';
 import apiClient from '@util/api.util';
@@ -30,7 +31,9 @@ class WpRepo implements IWpRepo {
       options: {
         isPublicPath: true,
       },
-    }).then(this.parseWP);
+    })
+    .then(this.parseWP)
+    .catch(this.handleReject);
   }
 
   fetchPage = async (pageSlug: string): Promise<IFetchResponse> => {
@@ -39,7 +42,9 @@ class WpRepo implements IWpRepo {
       options: {
         isPublicPath: true,
       },
-    }).then(this.parseWP);
+    })
+    .then(this.parseWP)
+    .catch(this.handleReject);
   };
 
   fetchPost = async (slug: string): Promise<IFetchResponse> => {
@@ -48,7 +53,9 @@ class WpRepo implements IWpRepo {
       options: {
         isPublicPath: true,
       },
-    }).then(this.parseWP);
+    })
+    .then(this.parseWP)
+    .catch(this.handleReject);
   };
 
   fetchPosts = async (params: IFetchPostsRequest): Promise<IFetchResponse> => {
@@ -57,7 +64,9 @@ class WpRepo implements IWpRepo {
       options: {
         isPublicPath: true,
       },
-    }).then(this.parseWP);
+    })
+    .then(this.parseWP)
+    .catch(this.handleReject);
   };
 
   parseWP = (response: any): Promise<IFetchResponse> =>
@@ -83,6 +92,24 @@ class WpRepo implements IWpRepo {
       } else {
         reject('not parseable');
       }
+
+      return resolve(fetchPostsResponse);
+    });
+
+  /** Handle errors by resolving promise and retunr error object in result */
+  handleReject = (response: any): Promise<IFetchResponse> =>
+    new Promise((resolve: any) => {
+      const fetchPostsResponse: IFetchResponse = {
+        data: [],
+        errors: [],
+      };
+      const error: IError = {
+        code: EErrorsCodes.FailedFetch,
+        info: response,
+      }
+      const errors: Array<IError> = [];
+      errors.push(error)
+      fetchPostsResponse.errors = errors;
 
       return resolve(fetchPostsResponse);
     });

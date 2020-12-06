@@ -7,9 +7,9 @@ export enum EWordpressEndpoints {
 
 export enum EWordpressFiles {
   menu = '/mock/menu.json',
-  posts = '/mock/posts.json',
-  post = '/mock/post.json',
-  page = '/mock/page.json',
+  posts = '/mock/{{posts}}.json',
+  post = '/mock/{{post}}.json',
+  page = '/mock/{{page}}.json',
 }
 
 export enum EENV {
@@ -24,8 +24,19 @@ export enum EWPTypes {
   menu = 'menu',
   post = 'post',
   posts = 'posts',
+  career = 'career',
+  careers = 'careers',
   page = 'page',
   unknown = 'unknown',
+}
+
+/**
+ * Errors and codes
+ */
+export enum EErrorsCodes {
+  SomethingWentWrong = '900',
+  FailedFetch = '901',
+  FileNotFound = '902',
 }
 
 /**
