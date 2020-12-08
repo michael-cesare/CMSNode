@@ -1,14 +1,12 @@
-import express, { Response, Request } from 'express';
+import { Response, Request, Router } from 'express';
 
 import asyncMiddleware from '@middleware/asyncMiddleware';
 import coreService from '@services/coreService';
 
 import ResponseHelper from '@helpers/ResponseHelper';
 import logger from '@util/logger.util';
-import { isNullOrUndefined, isEmpty } from '@util/core.util';
+import { isNullOrUndefined, isEmpty, sizeOf } from '@util/core.util';
 import { IFetchPostsRequest } from '@srcTypes/models';
-
-const wordpressRouter = express.Router();
 
 class WordpressController {
 
@@ -88,12 +86,12 @@ class WordpressController {
         const fetchPostsResult = await coreService.fetchPostsPage(isList, postsParams);
 
         // if the post type does not exists in wordpress, exist route and try next() one
-        if (isEmpty(fetchPostsResult)) {
+        if (isEmpty(fetchPostsResult) || sizeOf(fetchPostsResult) <= 0) {
           next()
+        } else {
+          ResponseHelper.WriteResult(res, fetchPostsResult);
+          res.end();
         }
-
-        ResponseHelper.WriteResult(res, fetchPostsResult);
-        res.end();
       }
     } catch (e) {
       logger.info(`[Error][HandlePostRequest] ${JSON.stringify(req.params)} ${JSON.stringify(e)}`);
@@ -103,16 +101,14 @@ class WordpressController {
   };
 }
 
-// Create a Home Instance as singleton
-const wordpressController = new WordpressController();
+export default async (app: Router) => {
+  const wordpressRouter = Router();
+  app.use('/wp', wordpressRouter)
+  const wordpressController = new WordpressController();
 
-// List of Routes to be mapped with the controller above.
-
-wordpressRouter.get('/menu', asyncMiddleware(wordpressController.HandleMenuRequest));
-wordpressRouter.get('/home', asyncMiddleware(wordpressController.HandleHomeRequest));
-wordpressRouter.get('/:postType/:postSlug?', asyncMiddleware(wordpressController.HandlePostPageRequest));
-wordpressRouter.get('/:pageSlug', asyncMiddleware(wordpressController.HandlePageRequest));
-wordpressRouter.get('/', asyncMiddleware(wordpressController.HandleHomeRequest));
-
-
-export default wordpressRouter;
+  wordpressRouter.get('/menu', asyncMiddleware(wordpressController.HandleMenuRequest));
+  wordpressRouter.get('/home', asyncMiddleware(wordpressController.HandleHomeRequest));
+  wordpressRouter.get('/:postType/:postSlug?', asyncMiddleware(wordpressController.HandlePostPageRequest));
+  wordpressRouter.get('/:pageSlug', asyncMiddleware(wordpressController.HandlePageRequest));
+  wordpressRouter.get('/', asyncMiddleware(wordpressController.HandleHomeRequest));
+}

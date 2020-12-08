@@ -47,7 +47,6 @@ export class WordpressHelper {
       slug: { name: 'slug' },
       date: { name: 'date' },
       type: { name: 'type' },
-      link: { name: 'link' },
       title: { name: 'title' },
       content: { name: 'content' },
       excerpt: { name: 'excerpt' },
