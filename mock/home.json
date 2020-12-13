@@ -5,9 +5,9 @@
     "slug": "home-page",
     "status": "publish",
     "type": "page",
-    "link": "https:\/\/wordpress.homes.com:5050\/home-page\/",
+    "link": "http:\/\/wordpress.homes.com:5050\/home-page\/",
     "title": "Home in Malta",
-    "content": "<pageContent>[[bg-image]][[paragraphs]][[cards]][[bg-image]]</pageContent>\n",
+    "content": "<pageContent>[[bg-image]][[paragraphs]][[cards]][[careers-cards]][[posts-cards]]</pageContent>\n",
     "excerpt": "<p>hi.<\/p>\n",
     "author": 1,
     "parent": 0,
@@ -17,7 +17,7 @@
       "page_templates": [
         {
           "order": 1,
-          "content": "<div class=\"bg-image\" style=\"background-image: url(https:\/\/i.insider.com\/5ad8e2b9bd967120008b4656)\"><div class=\"overlay\"><\/div><div class=\"pad-section relative\"><h2 style=\"text-align: center;\">Home Instead Senior Care presents<\/h2><p>&nbsp;<\/p><p style=\"text-align: center;\">Personalised senior care and lifestyle services to help you live your best<\/p><h3 style=\"text-align: center;\">Live well at home, your way with Home Instead<\/h3><p style=\"text-align: center;\">We understand that home is where you feel the happiest. If you want to stay living comfortably at home, you can live well, your way with Home Instead.<\/p><\/div><\/div>\n",
+          "content": "<div class=\"bg-image\" style=\"background-image: url(http:\/\/i.insider.com\/5ad8e2b9bd967120008b4656)\"><div class=\"overlay\"><\/div><div class=\"pad-section relative\"><h2 style=\"text-align: center;\">Home Instead Senior Care presents<\/h2><p>&nbsp;<\/p><p style=\"text-align: center;\">Personalised senior care and lifestyle services to help you live your best<\/p><h3 style=\"text-align: center;\">Live well at home, your way with Home Instead<\/h3><p style=\"text-align: center;\">We understand that home is where you feel the happiest. If you want to stay living comfortably at home, you can live well, your way with Home Instead.<\/p><\/div><\/div>\n",
           "place_holder": "bg-image",
           "type": "bg-image"
         },
@@ -79,13 +79,13 @@
           "content": [
             {
               "title": "Card Title",
-              "image": "https:\/\/thebossmagazine.com\/wp-content\/uploads\/2016\/12\/iStock-106586892-2.jpg",
+              "image": "http:\/\/thebossmagazine.com\/wp-content\/uploads\/2016\/12\/iStock-106586892-2.jpg",
               "text": "Some card's content.",
               "button_link": "Go somewhere"
             },
             {
               "title": "Card Title 2",
-              "image": "https:\/\/www.biospectrumindia.com\/uploads\/articles\/shutterstock_146517545_1024x683-17361.jpg",
+              "image": "http:\/\/www.biospectrumindia.com\/uploads\/articles\/shutterstock_146517545_1024x683-17361.jpg",
               "text": "Some quick example text to build on the card title and make up the bulk of the card's content.",
               "button_link": "Go somewhere 2"
             }
@@ -95,9 +95,35 @@
         },
         {
           "order": 4,
-          "content": "<div class=\"bg-image\" style=\"background-image: url(https:\/\/www.seniorlivingarrangements.com\/wp-content\/uploads\/2018\/01\/Elderly-Day-Care-Facility.jpg)\"><div class=\"overlay\"><\/div><div class=\"pad-section relative\"><h2 style=\"text-align: center;\">Home Instead Senior Care presents<\/h2><p>&nbsp;<\/p><p style=\"text-align: center;\">Personalised senior care and lifestyle services to help you live your best<\/p><h3 style=\"text-align: center;\">Live well at home, your way with Home Instead<\/h3><p style=\"text-align: center;\">We understand that home is where you feel the happiest. If you want to stay living comfortably at home, you can live well, your way with Home Instead.<\/p><\/div><\/div>\n",
-          "place_holder": "bg-image",
-          "type": "bg-image"
+          "content": "",
+          "content_post_type_query": {  
+            "search_count": 0,
+            "post_type": "careers",
+            "post_slug": "",
+            "sort_order": "",
+            "page_size": 6,
+            "page_index": 0,
+            "term_slugs": "",
+            "taxonomy": ""
+          },
+          "place_holder": "careers-cards",
+          "type": "cards"
+        },
+        {
+          "order": 5,
+          "content": "",
+          "content_post_type_query": {  
+            "search_count": 0,
+            "post_type": "posts",
+            "post_slug": "",
+            "sort_order": "",
+            "page_size": 6,
+            "page_index": 0,
+            "term_slugs": "",
+            "taxonomy": ""
+          },
+          "place_holder": "posts-cards",
+          "type": "cards"
         }
       ]
     }

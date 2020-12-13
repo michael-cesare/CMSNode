@@ -1,8 +1,17 @@
 import { Response } from 'express';
+import { IError } from '@srcTypes/models';
+import { EErrorsCodes } from '@srcTypes/enums';
 
 export default class ResponseHelper {
     public static WriteError(response: Response, exception: any): void {
-        if (exception.statusCode) {
+        if (typeof exception === 'string') {
+            const error: IError = {
+                code: EErrorsCodes.SomethingWentWrong,
+                info: exception,
+            };
+            response.setHeader("Content-Type", "application/json");
+            response.status(500).send(JSON.stringify(error));
+        } else if (exception.statusCode) {
             response.status(exception.statusCode);
         } else if (exception.body && exception.body.indexOf('NotFound') !== -1) {
             response.status(404);

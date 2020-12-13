@@ -5,7 +5,8 @@
   "private": true,
   "author": "Michael Cesare",
   "scripts": {
-    "start": "node dist/Index.js",
+    "start": "node dist/app.js",
+    "dev": "nodemon",
     "tsc": "tsc",
     "prebuild": "rimraf r dist && rimraf typings",
     "build": "tsc -p . && npm run html",
@@ -15,7 +16,8 @@
   },
   "_moduleAliases": {
     "@config": "dist/config",
-    "@controllers": "dist/controllers",
+    "@controllers": "dist/api/controllers",
+    "@webControllers": "dist/web/controllers",
     "@helpers": "dist/helpers",
     "@middleware": "dist/middleware",
     "@repositories": "dist/repositories",
@@ -46,6 +48,8 @@
     "copyfiles": "^2.4.0",
     "rimraf": "3.0.2",
     "tslib": "^2.0.3",
+    "nodemon": "^1.18.9",
+    "ts-node": "^7.0.1",
     "typescript": "^4.0.3"
   }
 }

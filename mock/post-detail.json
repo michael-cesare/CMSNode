@@ -1,0 +1,17 @@
+{
+    "id": 2,
+    "date": "2019-09-17T08:40:50",
+    "modified": "2020-10-25T13:49:03",
+    "slug": "post-detail",
+    "status": "publish",
+    "type": "page",
+    "link": "http:\/\/wordpress.homes.com:5050\/posts\/",
+    "title": "posts in Malta",
+    "content": "<pageContent>post-detail</pageContent>",
+    "excerpt": "<p>post-detail<\/p>\n",
+    "author": 1,
+    "parent": 0,
+    "menuOrder": 0,
+    "template": "post-detail.php",
+    "acf": {}
+  }

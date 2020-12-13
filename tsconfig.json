@@ -28,7 +28,8 @@
     "paths": {
       "@/*": [ "src/*" ],
       "@config/*": [ "src/config/*" ],
-      "@controllers/*": [ "src/controllers/*" ],
+      "@controllers/*": [ "src/api/controllers/*" ],
+      "@webControllers/*": [ "src/web/controllers/*" ],
       "@helpers/*": [ "src/helpers/*" ],
       "@middleware/*": [ "src/middleware/*" ],
       "@repositories/*": [ "src/repositories/*" ],
