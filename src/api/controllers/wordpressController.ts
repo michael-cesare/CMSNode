@@ -47,7 +47,7 @@ class WordpressController {
   public async HandlePageRequest(req: Request, res: Response, next: any): Promise<void> {
     try {
       const { pageSlug } = req.params;
-      const slug = isNullOrUndefined(pageSlug) || isEmpty(pageSlug) ? '': pageSlug;
+      const slug = isNullOrUndefined(pageSlug) || isEmpty(pageSlug) ? '' : pageSlug;
 
       const fetchPageResult = await coreService.fetchPage(slug);
 
@@ -65,7 +65,7 @@ class WordpressController {
    * It specifically designed for wordpress post types.
    */
   public async HandlePostPageRequest(req: Request, res: Response, next: any): Promise<void> {
-    
+
     try {
       const { postType, postSlug } = req.params;
       // route requires posttype.. make sure its present, else go to next route.

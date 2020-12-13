@@ -2,12 +2,23 @@ import WpRepo from '@repositories/wpRepo'
 import wpRepoMock from '@repositories/wpRepoMock'
 
 import { USE_MOCK } from "@config/envConfig"
-import { IFetchResponse, IFetchPostsRequest, IWpRepo, IWPMenu } from '@srcTypes/models'
+import { IFetchResponse, IFetchPostsRequest, IWpRepo, IWPMenu, IWPPage, IWPPosts, IPageTemplate } from '@srcTypes/models'
 import { IPostVM, IPageVM } from '@srcTypes/viewModels'
 
 import logger from '@util/logger.util'
 import * as menuUtil from '@util/menu.util'
 import { isEmpty, isNullOrUndefined } from '@util/core.util'
+
+const defaultPostQuery = {
+  postType: 'post',
+  postSlug: '',
+  searchCount: 0,
+  sortOrder: '',
+  pageSize: 5,
+  pageIndex: 0,
+  termSlugs: '',
+  taxonomy: '',
+}
 
 class CoreService {
   wpRepo: IWpRepo
@@ -22,44 +33,39 @@ class CoreService {
     return await this.wpRepo.fetchMenu()
   }
 
+  /**
+   * Fetch a single page, and fetch posts if it has posts query in the ACF templates.
+   * A page may have multiple post types listing, and might not have any.
+   * @param pageSlug page name
+   */
   fetchPage = async (pageSlug: string): Promise<IPageVM> => {
     logger.hit(`[fetchPage]: pageSlug ${pageSlug}`)
 
     let message = {} as IPageVM
     const fetchMenuResult = await this.wpRepo.fetchMenu()
     const fetchPageResult = await this.wpRepo.fetchPage(pageSlug)
+
+    const menu = fetchMenuResult.data as IWPMenu
+    const wpPage = fetchPageResult.data as IWPPage
+
+    // A page can have multiple posts in it, fetch them all
+    if (menu && wpPage.advanceFields) {
+      const { advanceFields: { pageTemplates } } = wpPage
+      wpPage.pagePosts = await this.fetchPagePosts(menu, pageTemplates)
+      fetchPageResult.data = wpPage
+    }
+
     message.menu = fetchMenuResult
     message.page = fetchPageResult
-
-    logger.hit(`[fetchPage]: test  `)
-    // TODO - fetchPosts for last 5 to show..example in homepage show stories using posts... show in cards/slider
-    //        maybe check ACF to search for posttypes using loop for eahc post type in page, and search each 1.
-    //        Also the Parser needs to update for using this, together with frontend loop.
-    //        Example:
-    //
-    // for (let index = 0 index < postTypes.length index++) {
-    //   const postsParams: IFetchPostsRequest = {
-    //     postType: fetchPageResult.acf.pagePosts[index].postType,
-    //     postSlug: '',
-    //     searchCount: 0,
-    //     sortOrder: '',
-    //     pageSize: fetchPageResult.acf.pagePosts[index].pageSize,
-    //     pageIndex: 0,
-    //     termSlugs: '',
-    //     taxonomy: '',
-    //   }
-    //   const fetchPostsResult = await this.wpRepo.fetchPosts(postsParams)
-    //   message.page.posts[index] = fetchPostsResult
-    // }
 
     return message
   }
 
   /**
    * First it graps the menu, then checks if the post type given exists.. if not return empty object.
-   * For single Fetch detailed page, and it details post using slug name.
-   * For Listing, Fetch listing page, and all post for the given post type.
-   * Note that Page is Optional, but post type must exists.
+   * For single; Fetch detailed page, and it details post using slug name.
+   * For Listing; Fetch listing page, and all post for the given post type.
+   * Note: that Page is Optional, but post is required.
    * @param isSingle detailed page or listing page
    * @param params request parameters
    */
@@ -68,7 +74,6 @@ class CoreService {
     const { postType } = params
     const postTypePageSlug = `${postType}-${type}`
     logger.hit(`[fetchPosts][${postTypePageSlug}]`)
-    logger.hit(`[fetchPosts]: pageSlug ${postType.length}`)
 
     let message = {} as IPostVM
     const fetchMenuResult = await this.wpRepo.fetchMenu()
@@ -94,6 +99,30 @@ class CoreService {
     }
 
     return message
+  }
+
+  /**
+   * Uses ACF page Advance field to query every post type in list.
+   * @param menu full menu and routing
+   * @param acfTemplates page Templates Advance Field
+   */
+  private fetchPagePosts = async (menu: IWPMenu, acfTemplates: Array<IPageTemplate<any>>): Promise<IWPPosts[]> => {
+    let pagePosts: Array<IWPPosts> = []
+    for (let index = 0; index < acfTemplates.length; index++) {
+      const { contentPostTypeQuery } = acfTemplates[index]
+
+      if (contentPostTypeQuery && !isEmpty(contentPostTypeQuery)) {
+        const menuHasPostType = menuUtil.findPostType(menu, contentPostTypeQuery.postType)
+        if (menuHasPostType && !isEmpty(menuHasPostType) && !isNullOrUndefined(menuHasPostType)) {
+          const postsParams: IFetchPostsRequest = Object.assign(defaultPostQuery, contentPostTypeQuery)
+          const fetchPostsResult = await this.wpRepo.fetchPosts(postsParams)
+          pagePosts.push(fetchPostsResult.data as IWPPosts)
+        }
+      }
+
+    }
+
+    return pagePosts
   }
 }
 

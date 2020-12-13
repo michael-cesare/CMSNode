@@ -5,7 +5,7 @@
     "slug": "careers-listing",
     "status": "publish",
     "type": "page",
-    "link": "https:\/\/wordpress.homes.com:5050\/careers\/",
+    "link": "http:\/\/wordpress.homes.com:5050\/careers\/",
     "title": "Careers in Malta",
     "content": "<pageContent>careers-listing</pageContent>",
     "excerpt": "<p>careers-listing<\/p>\n",

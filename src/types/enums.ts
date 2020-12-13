@@ -61,4 +61,5 @@ export enum EDomTypes {
   paragraphs = 'paragraphs',
   string = 'string',
   unknown = 'unknown',
+  postType = 'postType',
 }

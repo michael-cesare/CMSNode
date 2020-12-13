@@ -5,7 +5,7 @@
     "slug": "post-detail",
     "status": "publish",
     "type": "page",
-    "link": "https:\/\/wordpress.homes.com:5050\/posts\/",
+    "link": "http:\/\/wordpress.homes.com:5050\/posts\/",
     "title": "posts in Malta",
     "content": "<pageContent>post-detail</pageContent>",
     "excerpt": "<p>post-detail<\/p>\n",

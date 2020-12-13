@@ -5,7 +5,7 @@
     "slug": "post-listing",
     "status": "publish",
     "type": "page",
-    "link": "https:\/\/wordpress.homes.com:5050\/post\/",
+    "link": "http:\/\/wordpress.homes.com:5050\/post\/",
     "title": "post in Malta",
     "content": "<pageContent>post-listing</pageContent>",
     "excerpt": "<p>post-listing<\/p>\n",

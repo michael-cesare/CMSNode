@@ -1,4 +1,5 @@
 {
+  "type": "careers",
   "post_count": 1,
   "found_posts": 1,
   "max_num_pages": 1,
@@ -10,10 +11,38 @@
       "slug": "driver",
       "status": "publish",
       "type": "career",
-      "link": "https:\/\/wordpress.homes.com:5050\/careers\/driver\/",
-      "thumbnail": "https:\/\/d277uoz5xnm2p3.cloudfront.net\/FilePickerUpload\/5f7b026333fa7\/r_crop-4752-3087-fc0ff03025b600146f5247842cf6dd01\/Banner-4752x3087.jpg?width=757",
+      "link": "http:\/\/wordpress.homes.com:5050\/careers\/driver\/",
+      "thumbnail": "http:\/\/d277uoz5xnm2p3.cloudfront.net\/FilePickerUpload\/5f7b026333fa7\/r_crop-4752-3087-fc0ff03025b600146f5247842cf6dd01\/Banner-4752x3087.jpg?width=757",
       "title": "driver in Malta",
-      "content": "<p>driver<\/p>\n",
+      "content": "<p>Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molestie, porttitor ut, iaculis quis, sem. Phasellus rhoncus. Aenean id metus id velit ullamcorper pulvinar. Vestibulum fermentum tortor id mi. Pellentesque ipsum. Nulla non arcu lacinia neque faucibus fringilla. Nulla non lectus sed nisl molestie malesuada. Proin in tellus sit amet nibh dignissim sagittis. Vivamus luctus egestas leo. Maecenas sollicitudin. Nullam rhoncus aliquam metus. Etiam egestas wisi a erat.<\/p>\n",
+      "excerpt": "<p>Soon, to be added.<\/p>\n",
+      "author": 2
+    },
+    {
+      "id": 3,
+      "date": "2020-10-12T14:46:09",
+      "modified": "2020-10-13T08:37:18",
+      "slug": "nurse",
+      "status": "publish",
+      "type": "career",
+      "link": "http:\/\/wordpress.homes.com:5050\/careers\/nurse\/",
+      "thumbnail": "http:\/\/d277uoz5xnm2p3.cloudfront.net\/FilePickerUpload\/5f7b026333fa7\/r_crop-4752-3087-fc0ff03025b600146f5247842cf6dd01\/Banner-4752x3087.jpg?width=757",
+      "title": "Nurse in Malta",
+      "content": "<p>Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molestie, porttitor ut, iaculis quis, sem. Phasellus rhoncus. Aenean id metus id velit ullamcorper pulvinar. Vestibulum fermentum tortor id mi. Pellentesque ipsum. Nulla non arcu lacinia neque faucibus fringilla. Nulla non lectus sed nisl molestie malesuada. Proin in tellus sit amet nibh dignissim sagittis. Vivamus luctus egestas leo. Maecenas sollicitudin. Nullam rhoncus aliquam metus. Etiam egestas wisi a erat.<\/p>\n",
+      "excerpt": "<p>Soon, to be added.<\/p>\n",
+      "author": 2
+    },
+    {
+      "id": 4,
+      "date": "2020-10-12T14:46:09",
+      "modified": "2020-10-13T08:37:18",
+      "slug": "helper",
+      "status": "publish",
+      "type": "career",
+      "link": "http:\/\/wordpress.homes.com:5050\/careers\/helper\/",
+      "thumbnail": "http:\/\/d277uoz5xnm2p3.cloudfront.net\/FilePickerUpload\/5f7b026333fa7\/r_crop-4752-3087-fc0ff03025b600146f5247842cf6dd01\/Banner-4752x3087.jpg?width=757",
+      "title": "helper in Malta",
+      "content": "<p>Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molestie, porttitor ut, iaculis quis, sem. Phasellus rhoncus. Aenean id metus id velit ullamcorper pulvinar. Vestibulum fermentum tortor id mi. Pellentesque ipsum. Nulla non arcu lacinia neque faucibus fringilla. Nulla non lectus sed nisl molestie malesuada. Proin in tellus sit amet nibh dignissim sagittis. Vivamus luctus egestas leo. Maecenas sollicitudin. Nullam rhoncus aliquam metus. Etiam egestas wisi a erat.<\/p>\n",
       "excerpt": "<p>Soon, to be added.<\/p>\n",
       "author": 2
     }
