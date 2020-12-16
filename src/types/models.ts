@@ -5,6 +5,7 @@ export interface IObject {
 }
 
 export interface IWPMenu extends IObject {
+  type: string,
   menu: Array<IMenuItem>,
   postTypes: Array<string>,
 }
@@ -79,6 +80,17 @@ export interface IFetchPostsResponse extends IFetchResponse {
 
 //  -------------    ACF PageTemplates Objects   -------------------
 
+export interface IBgImageHeader {
+  text: string,
+  style: IStyle,
+}
+
+export interface IBgImage {
+  url: string,
+  header: IBgImageHeader,
+  paragraphs: Array<IParagraph>,
+}
+
 export interface ICardInfo {
   title: string,
   image: string,
@@ -126,7 +138,7 @@ export interface IPageTemplateParagraphs extends IPageTemplate<Array<IParagraph>
   title: IParagraphsTitle,
 }
 
-export interface IPageTemplateBgImage extends IPageTemplate<string> {
+export interface IPageTemplateBgImage extends IPageTemplate<IBgImage> {
 }
 
 
@@ -147,6 +159,7 @@ export interface IStyle {
   padding: string,
   color: string,
   fontSize: string,
+  textAlign?: string | undefined,
 }
 
 export interface IMenuItem {

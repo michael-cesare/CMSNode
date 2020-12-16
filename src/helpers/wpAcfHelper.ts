@@ -21,6 +21,9 @@ export class WpAcfHelper {
   private styleSet: IWPSet
   private contentPostTypeQuerySet: IWPSet
   private cardSet: IWPSet
+  private bgImageHeaderSet: IWPSet
+  private bgImageParagraphsSet: IWPSet
+  private bgImageConentSet: IWPSet
   private bgImageSet: IWPSet
   private cardsSet: IWPSet
   private acfSet: IWPSet
@@ -35,6 +38,7 @@ export class WpAcfHelper {
       padding: { name: 'padding' },
       color: { name: 'color' },
       font_size: { name: 'fontSize' },
+      text_align: { name: 'textAlign' },
     }
     this.contentPostTypeQuerySet = {
       search_count: { name: 'searchCount' },
@@ -53,9 +57,22 @@ export class WpAcfHelper {
       button_link: { name: 'buttonLink' },
       style: { name: 'style', func: this.parseItem, params: this.styleSet },
     }
+    this.bgImageHeaderSet = {
+      text: { name: 'text' },
+      style: { name: 'style', func: this.parseItem, params: this.styleSet },
+    }
+    this.bgImageParagraphsSet = {
+      text: { name: 'text' },
+      style: { name: 'style', func: this.parseItem, params: this.styleSet },
+    }
+    this.bgImageConentSet = {
+      url: { name: 'url' },
+      header: { name: 'header', func: this.parseItem, params: this.bgImageHeaderSet },
+      paragraphs: { name: 'paragraphs', func: this.parseItem, params: this.bgImageParagraphsSet },
+    }
     this.bgImageSet = {
       order: { name: 'order' },
-      content: { name: 'content' },
+      content: { name: 'content', func: this.parseItem, params: this.bgImageConentSet },
       place_holder: { name: 'placeHolder' },
       type: { name: 'type' },
       content_post_type_query: { name: 'contentPostTypeQuery', func: this.parseItem, params: this.contentPostTypeQuerySet },
