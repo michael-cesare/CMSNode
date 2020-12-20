@@ -39,6 +39,7 @@ export class WpAcfHelper {
       color: { name: 'color' },
       font_size: { name: 'fontSize' },
       text_align: { name: 'textAlign' },
+      line_height: { name: 'lineHeight' },
     }
     this.contentPostTypeQuerySet = {
       search_count: { name: 'searchCount' },

@@ -7,7 +7,7 @@
   "type": "page",
   "link": "http:\/\/wordpress.homes.com:5050\/home-page\/",
   "title": "Home in Malta",
-  "content": "<pageContent>[[bg-image]][[paragraphs]]</pageContent>\n",
+  "content": "<pageContent>[[bg-image]][[paragraphs]][[paragraphs]][[paragraphs]]</pageContent>\n",
   "excerpt": "<p>hi.<\/p>\n",
   "author": 1,
   "parent": 0,
@@ -20,41 +20,19 @@
         "content": {
           "url": "http:\/\/i.insider.com\/5ad8e2b9bd967120008b4656",
           "header": {
-            "text": "<h2>Home Instead Senior Care presents</h2>",
+            "text": "<h2>Home Care presents</h2>",
             "style": {
               "text_align": "center",
-              "background_color": "rgba(0,0,0,1)",
               "color": "rgba(255,255,255,1)",
               "padding": "1rem",
-              "font_size": "1.2rem"
+              "font_size": "2.2rem"
             }
           },
           "paragraphs": [
             {
-              "text": "<p>Personalised senior care and lifestyle services to help you live your best</p>",
-              "style": {
-                "text_align": "center",
-                "background_color": "rgba(0,0,0,1)",
-                "color": "rgba(255,255,255,1)",
-                "padding": "1rem",
-                "font_size": "1.2rem"
-              }
-            },
-            {
               "text": "<p>Live well at home, your way with Home Instead</p>",
               "style": {
                 "text_align": "center",
-                "background_color": "rgba(0,0,0,1)",
-                "color": "rgba(255,255,255,1)",
-                "padding": "1rem",
-                "font_size": "1.2rem"
-              }
-            },
-            {
-              "text": "<p>We understand that home is where you feel the happiest. If you want to stay living comfortably at home, you can live well, your way with Home Instead.</p>",
-              "style": {
-                "text_align": "center",
-                "background_color": "rgba(0,0,0,1)",
                 "color": "rgba(255,255,255,1)",
                 "padding": "1rem",
                 "font_size": "1.2rem"
@@ -69,39 +47,82 @@
         "order": 2,
         "content": [
           {
-            "text": "<p>We understand that home is where you feel the happiest. If you want to stay living comfortably at home, you can live well, your way with Home Instead.</p>",
-            "style": {
-              "color": "rgba(255,255,255,1)",
-              "background_color": "rgba(0,0,0,1)",
-              "padding": "1rem",
-              "font_size": "1.2rem"
-            }
-          },
-          {
-            "text": "<p>Home Instead has been at the forefront of specialised home care for the elderly and supporting those being cared for and their families for many years. Founded on personal experience, these family values remain at the core of everything we do 24 years on.</p>",
-            "style": {
-              "color": "rgba(255,255,255,1)",
-              "background_color": "rgba(0,0,0,1)",
-              "padding": "1rem",
-              "font_size": "1.2rem"
-            }
-          },
-          {
             "text": "<p>We believe age should be celebrated and that everybody should be able to live happily, comfortably and independently at home.</p>",
             "style": {
-              "color": "rgba(255,255,255,1)",
-              "background_color": "rgba(0,0,0,1)",
-              "padding": "1rem",
-              "font_size": "1.2rem"
+              "color": "rgba(0,0,0,1)",
+              "background_color": "rgba(255,255,255,1)",
+              "padding": ".25rem 0",
+              "text_align": "left",
+              "font_size": "1.2rem",
+              "line_height": "1.6rem"
             }
           },
           {
             "text": "<p>Start your Home Instead journey today.</p>",
             "style": {
-              "color": "rgba(255,255,255,1)",
-              "background_color": "rgba(0,0,0,1)",
-              "padding": "1rem",
-              "font_size": "1.2rem"
+              "color": "rgba(0,0,0,1)",
+              "background_color": "rgba(255,255,255,1)",
+              "padding": ".25rem 0",
+              "text_align": "left",
+              "font_size": "1.2rem",
+              "line_height": "1.6rem"
+            }
+          }
+        ],
+        "place_holder": "paragraphs",
+        "type": "paragraphs",
+        "title": {
+          "text": "Considering Live-in Care?",
+          "style": {
+            "color": "rgba(0,0,0,1)",
+            "background_color": "rgba(255,255,255,1)",
+            "padding": ".5rem 0",
+            "text_align": "left",
+            "font_size": "2.2rem"
+          }
+        },
+        "style": {
+          "color": "rgba(0,0,0,1)",
+          "background_color": "rgba(255,255,255,1)",
+          "padding": ".5rem 10%",
+          "text_align": "left",
+          "font_size": "1.5rem"
+        }
+      },
+      {
+        "order": 3,
+        "content": [
+          {
+            "text": "<p>We understand that home is where you feel the happiest. If you want to stay living comfortably at home, you can live well, your way with Home Instead.</p>",
+            "style": {
+              "color": "rgba(0,0,0,1)",
+              "background_color": "rgba(255,255,255,1)",
+              "padding": ".25rem 0",
+              "text_align": "left",
+              "font_size": "1.2rem",
+              "line_height": "1.6rem"
+            }
+          },
+          {
+            "text": "<p>We believe age should be celebrated and that everybody should be able to live happily, comfortably and independently at home.</p>",
+            "style": {
+              "color": "rgba(0,0,0,1)",
+              "background_color": "rgba(255,255,255,1)",
+              "padding": ".25rem 0",
+              "text_align": "left",
+              "font_size": "1.2rem",
+              "line_height": "1.6rem"
+            }
+          },
+          {
+            "text": "<p>Start your Home Instead journey today.</p>",
+            "style": {
+              "color": "rgba(0,0,0,1)",
+              "background_color": "rgba(255,255,255,1)",
+              "padding": ".25rem 0",
+              "text_align": "left",
+              "font_size": "1.2rem",
+              "line_height": "1.6rem"
             }
           }
         ],
@@ -110,15 +131,75 @@
         "title": {
           "text": "Live well at home, your way with Home Instead",
           "style": {
-            "color": "rgba(255,255,255,1)",
-            "padding": "1rem",
+            "color": "rgba(0,0,0,1)",
+            "background_color": "rgba(255,255,255,1)",
+            "padding": ".5rem 0",
+            "text_align": "left",
             "font_size": "2.2rem"
           }
         },
         "style": {
-          "background_color": "rgba(0,0,0,1)",
-          "color": "rgba(255,255,255,1)",
-          "padding": "1rem",
+          "color": "rgba(0,0,0,1)",
+          "background_color": "rgba(255,255,255,1)",
+          "padding": ".5rem 10%",
+          "text_align": "left",
+          "font_size": "1.5rem"
+        }
+      },
+      {
+        "order": 3,
+        "content": [
+          {
+            "text": "<p>The first step towards live-in care is arranging a care consultation with us. This is where we learn about your situation and discuss options for you that might best suit your loved one’s needs.</p>",
+            "style": {
+              "color": "rgba(0,0,0,1)",
+              "background_color": "rgba(255,255,255,1)",
+              "padding": ".25rem 0",
+              "text_align": "left",
+              "font_size": "1.2rem",
+              "line_height": "1.6rem"
+            }
+          },
+          {
+            "text": "<p>Enter your details in the form below, and we’ll send one of our qualified care managers to your loved one’s home to have a chat with you, and any other relatives about what you believe you need from a care service.</p>",
+            "style": {
+              "color": "rgba(0,0,0,1)",
+              "background_color": "rgba(255,255,255,1)",
+              "padding": ".25rem 0",
+              "text_align": "left",
+              "font_size": "1.2rem",
+              "line_height": "1.6rem"
+            }
+          },
+          {
+            "text": "<p>Chances are, live-in care is a new concept to you. That’s why we want to talk you through the different options available and make the best recommendation for your individual circumstances.</p>",
+            "style": {
+              "color": "rgba(0,0,0,1)",
+              "background_color": "rgba(255,255,255,1)",
+              "padding": ".25rem 0",
+              "text_align": "left",
+              "font_size": "1.2rem",
+              "line_height": "1.6rem"
+            }
+          }
+        ],
+        "place_holder": "paragraphs",
+        "type": "paragraphs",
+        "title": {
+          "text": "What comes next?",
+          "style": {
+            "color": "rgba(0,0,0,1)",
+            "background_color": "rgba(255,255,255,1)",
+            "padding": ".5rem 0",
+            "text_align": "left",
+            "font_size": "2.2rem"
+          }
+        },
+        "style": {
+          "color": "rgba(0,0,0,1)",
+          "background_color": "rgba(255,255,255,1)",
+          "padding": ".5rem 10%",
+          "text_align": "left",
           "font_size": "1.5rem"
         }
       }
