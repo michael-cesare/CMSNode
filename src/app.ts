@@ -47,4 +47,6 @@ const errorCatcher = async (err: any) => {
 }
 
 const configFilePath = pathResolve("/public/config.json");
-readfile(configFilePath, startNode, errorCatcher);
+readfile(configFilePath)
+  .then(startNode)
+  .catch(errorCatcher)

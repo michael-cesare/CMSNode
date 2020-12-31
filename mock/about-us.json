@@ -7,7 +7,7 @@
   "type": "page",
   "link": "http:\/\/wordpress.homes.com:5050\/home-page\/",
   "title": "Home in Malta",
-  "content": "<pageContent>[[bg-image]][[paragraphs]][[paragraphs]][[paragraphs]]</pageContent>\n",
+  "content": "<pageContent>[[bg-image]][[paragraphs]][[paragraphs]][[paragraphs]][[posts-briefs]]</pageContent>\n",
   "excerpt": "<p>hi.<\/p>\n",
   "author": 1,
   "parent": 0,
@@ -84,7 +84,7 @@
         "style": {
           "color": "rgba(0,0,0,1)",
           "background_color": "rgba(255,255,255,1)",
-          "padding": ".5rem 10%",
+          "padding": "1.5rem 10% .5rem 10%",
           "text_align": "left",
           "font_size": "1.5rem"
         }
@@ -147,7 +147,7 @@
         }
       },
       {
-        "order": 3,
+        "order": 4,
         "content": [
           {
             "text": "<p>The first step towards live-in care is arranging a care consultation with us. This is where we learn about your situation and discuss options for you that might best suit your loved one’s needs.</p>",
@@ -198,9 +198,38 @@
         "style": {
           "color": "rgba(0,0,0,1)",
           "background_color": "rgba(255,255,255,1)",
-          "padding": ".5rem 10%",
+          "padding": ".5rem 10% 1.5rem 10%",
           "text_align": "left",
           "font_size": "1.5rem"
+        }
+      },
+      {
+        "order": 5,
+        "content": "",
+        "content_post_ids_query": {
+          "ids": [
+            2,
+            345
+          ]
+        },
+        "content_style": {
+          "title": {
+            "style": {
+              "color": "rgba(0,0,0,1)"
+            }
+          },
+          "text": {
+            "style": {
+              "color": "rgba(0,0,0,1)"
+            }
+          }
+        },
+        "place_holder": "posts-briefs",
+        "type": "briefs",
+        "style": {
+          "color": "rgba(0,0,0,1)",
+          "background_color": "rgba(255,255,255,1)",
+          "padding": "1.5rem"
         }
       }
     ]

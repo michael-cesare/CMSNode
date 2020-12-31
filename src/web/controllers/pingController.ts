@@ -1,7 +1,7 @@
 
 import { Response, Request, Router } from 'express';
 
-import asyncMiddleware from '@middleware/asyncMiddleware';
+import timeouMiddleware from '@middleware/timeouMiddleware';
 
 import ResponseHelper from '@helpers/ResponseHelper';
 import logger from '@util/logger.util';
@@ -39,6 +39,6 @@ export default (app: Router) => {
   const pingRouter = Router();
   app.use('/ping', pingRouter)
   const pingController = new PingController();
-  pingRouter.get('/', asyncMiddleware(pingController.HandlePingRequest));
-  pingRouter.get('/web', asyncMiddleware(pingController.HandleWebRequest));
+  pingRouter.get('/', timeouMiddleware(pingController.HandlePingRequest));
+  pingRouter.get('/web', timeouMiddleware(pingController.HandleWebRequest));
 }
