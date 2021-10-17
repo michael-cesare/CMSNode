@@ -9,6 +9,7 @@ export const LOGGER_LEVEL = () => instance.config?.LOGGER_LEVEL || "info";
 export const API_NAMESPACE = () => instance.config?.API_NAMESPACE || "api";
 export const SITE_URL = () => instance.config?.SITE_URL || "http://localhost:5000";
 export const USE_MOCK = () => (instance.config?.USE_MOCK && instance.config.USE_MOCK === 'true') || true;
+export const IS_SRC = () => instance.config?.IS_SRC || true;
 
 const instance = new envConfig();
 export default instance;

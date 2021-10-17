@@ -1,0 +1,38 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "node ts debug",
+            "type": "pwa-node",
+            "port": 9229,
+            "console": "integratedTerminal",
+            "request": "launch",
+            "preLaunchTask": "tsc: build - tsconfig.json",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\index.ts",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        },
+        {
+            "name": "node debug",
+            "type": "pwa-node",
+            "port": 9229,
+            "console": "integratedTerminal",
+            "request": "launch",
+            "preLaunchTask": "compile",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\index.js",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        }
+    ]
+}

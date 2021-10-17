@@ -1,8 +1,8 @@
 {
   "type": "posts",
-  "post_count": 1,
-  "found_posts": 1,
-  "max_num_pages": 1,
+  "post_count": 2,
+  "found_posts": 2,
+  "max_num_pages": 2,
   "posts": [
     {
       "id": 2,
@@ -15,6 +15,19 @@
       "title": "Homes in Malta",
       "content": "<p><img class=\"aligncenter size-full wp-image-1913\" src=\"https:\/\/wordpress.homes.com:5050\/wp-content\/uploads\/2020\/10\/homes-in-Malta.png\" alt=\"\" width=\"560\" height=\"315\" srcset=\"https:\/\/wordpress.homes.com:5050\/wp-content\/uploads\/2020\/10\/homes-in-Malta.png 560w, https:\/\/wordpress.homes.com:5050\/wp-content\/uploads\/2020\/10\/homes-in-Malta-300x169.png 300w\" sizes=\"(max-width: 560px) 100vw, 560px\" \/><\/p>\n<p>&nbsp;<\/p>\n<p>Soon, to be added <strong>please<\/strong><\/p>\n",
       "excerpt": "<p>Soon, to be added.<\/p>\n",
+      "author": 2
+    },
+    {
+      "id": 345,
+      "date": "2020-10-12T14:46:09",
+      "modified": "2020-10-13T08:37:18",
+      "slug": "a-story",
+      "status": "publish",
+      "type": "post",
+      "link": "https:\/\/wordpress.homes.com:5050\/post\/home-in-malta\/",
+      "title": "Homes in Malta",
+      "content": "<p><img class=\"aligncenter size-full wp-image-1913\" src=\"https:\/\/wordpress.homes.com:5050\/wp-content\/uploads\/2020\/10\/homes-in-Malta.png\" alt=\"\" width=\"560\" height=\"315\" srcset=\"https:\/\/wordpress.homes.com:5050\/wp-content\/uploads\/2020\/10\/homes-in-Malta.png 560w, https:\/\/wordpress.homes.com:5050\/wp-content\/uploads\/2020\/10\/homes-in-Malta-300x169.png 300w\" sizes=\"(max-width: 560px) 100vw, 560px\" \/><\/p>\n<p>&nbsp;<\/p>\n<p>Soon, to be added <strong>please<\/strong><\/p>\n",
+      "excerpt": "<p>Soon, to be added again.<\/p>\n",
       "author": 2
     }
   ]

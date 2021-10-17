@@ -2,23 +2,23 @@ import WpRepo from '@repositories/wpRepo'
 import wpRepoMock from '@repositories/wpRepoMock'
 
 import { USE_MOCK } from "@config/envConfig"
-import { IFetchResponse, IFetchPostsRequest, IWpRepo, IWPMenu, IWPPage, IWPPosts, IPageTemplate } from '@srcTypes/models'
+import {
+  IFetchResponse,
+  IFetchPostsRequest,
+  IFetchPostsListRequest,
+  IWpRepo,
+  IWPMenu,
+  IWPPage,
+  IWPPosts,
+  IPageTemplate,
+  IWPPagePosts,
+} from '@srcTypes/models'
 import { IPostVM, IPageVM } from '@srcTypes/viewModels'
 
 import logger from '@util/logger.util'
 import * as menuUtil from '@util/menu.util'
 import { isEmpty, isNullOrUndefined } from '@util/core.util'
-
-const defaultPostQuery = {
-  postType: 'post',
-  postSlug: '',
-  searchCount: 0,
-  sortOrder: '',
-  pageSize: 5,
-  pageIndex: 0,
-  termSlugs: '',
-  taxonomy: '',
-}
+import { defaultPostQuery, defaultPostListQuery } from '@util/query.util'
 
 class CoreService {
   wpRepo: IWpRepo
@@ -98,7 +98,7 @@ class CoreService {
       }
     }
 
-    return message
+    return await Promise.resolve(message)
   }
 
   /**
@@ -107,22 +107,31 @@ class CoreService {
    * @param acfTemplates page Templates Advance Field
    */
   private fetchPagePosts = async (menu: IWPMenu, acfTemplates: Array<IPageTemplate<any>>): Promise<IWPPosts[]> => {
-    let pagePosts: Array<IWPPosts> = []
+    let pagePosts: Array<IWPPagePosts> = []
     for (let index = 0; index < acfTemplates.length; index++) {
-      const { contentPostTypeQuery } = acfTemplates[index]
+      const { contentPostTypeQuery, contentPostIdsQuery } = acfTemplates[index]
 
       if (contentPostTypeQuery && !isEmpty(contentPostTypeQuery)) {
         const menuHasPostType = menuUtil.findPostType(menu, contentPostTypeQuery.postType)
         if (menuHasPostType && !isEmpty(menuHasPostType) && !isNullOrUndefined(menuHasPostType)) {
-          const postsParams: IFetchPostsRequest = Object.assign(defaultPostQuery, contentPostTypeQuery)
+          const postsParams: IFetchPostsRequest = Object.assign(defaultPostQuery(), contentPostTypeQuery)
           const fetchPostsResult = await this.wpRepo.fetchPosts(postsParams)
-          pagePosts.push(fetchPostsResult.data as IWPPosts)
+          const pagePostsEntry = fetchPostsResult.data as IWPPagePosts
+          pagePostsEntry.mappedIndex = index
+          pagePosts.push(pagePostsEntry)
         }
       }
 
+      if (contentPostIdsQuery && !isEmpty(contentPostIdsQuery)) {
+        const postsParams: IFetchPostsListRequest = Object.assign(defaultPostListQuery(), contentPostIdsQuery)
+        const fetchPostsResult = await this.wpRepo.fetchPostsList(postsParams)
+        const pagePostsEntry = fetchPostsResult.data as IWPPagePosts
+        pagePostsEntry.mappedIndex = index
+        pagePosts.push(pagePostsEntry)
+      }
     }
 
-    return pagePosts
+    return await Promise.resolve(pagePosts)
   }
 }
 

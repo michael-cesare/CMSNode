@@ -20,7 +20,15 @@ interface IWPSet {
 export class WpAcfHelper {
   private styleSet: IWPSet
   private contentPostTypeQuerySet: IWPSet
+  private contentPostIdsQuerySet: IWPSet
   private cardSet: IWPSet
+  private briefSet: IWPSet
+  private briefsContentTitleStyleSet: IWPSet
+  private briefsContentTextStyleSet: IWPSet
+  private briefsContentStyleSet: IWPSet
+  private bgImageHeaderSet: IWPSet
+  private bgImageParagraphsSet: IWPSet
+  private bgImageConentSet: IWPSet
   private bgImageSet: IWPSet
   private cardsSet: IWPSet
   private acfSet: IWPSet
@@ -28,6 +36,7 @@ export class WpAcfHelper {
   private paragraphSet: IWPSet
   private paragraphsSet: IWPSet
   private postTypeSet: IWPSet
+  private briefsSet: IWPSet
 
   constructor() {
     this.styleSet = {
@@ -35,6 +44,8 @@ export class WpAcfHelper {
       padding: { name: 'padding' },
       color: { name: 'color' },
       font_size: { name: 'fontSize' },
+      text_align: { name: 'textAlign' },
+      line_height: { name: 'lineHeight' },
     }
     this.contentPostTypeQuerySet = {
       search_count: { name: 'searchCount' },
@@ -46,6 +57,19 @@ export class WpAcfHelper {
       term_slugs: { name: 'termSlugs' },
       taxonomy: { name: 'taxonomy' },
     }
+    this.contentPostIdsQuerySet = {
+      ids: { name: 'ids' },
+    }
+    this.briefsContentTitleStyleSet = {
+      style: { name: 'style', func: this.parseItem, params: this.styleSet },
+    }
+    this.briefsContentTextStyleSet = {
+      style: { name: 'style', func: this.parseItem, params: this.styleSet },
+    }
+    this.briefsContentStyleSet = {
+      title: { name: 'title', func: this.parseItem, params: this.briefsContentTitleStyleSet },
+      text: { name: 'text', func: this.parseItem, params: this.briefsContentTextStyleSet },
+    }
     this.cardSet = {
       title: { name: 'title' },
       image: { name: 'image' },
@@ -53,12 +77,32 @@ export class WpAcfHelper {
       button_link: { name: 'buttonLink' },
       style: { name: 'style', func: this.parseItem, params: this.styleSet },
     }
+    this.briefSet = {
+      title: { name: 'title' },
+      image: { name: 'image' },
+      text: { name: 'text' },
+      link: { name: 'link' },
+    }
+    this.bgImageHeaderSet = {
+      text: { name: 'text' },
+      style: { name: 'style', func: this.parseItem, params: this.styleSet },
+    }
+    this.bgImageParagraphsSet = {
+      text: { name: 'text' },
+      style: { name: 'style', func: this.parseItem, params: this.styleSet },
+    }
+    this.bgImageConentSet = {
+      url: { name: 'url' },
+      header: { name: 'header', func: this.parseItem, params: this.bgImageHeaderSet },
+      paragraphs: { name: 'paragraphs', func: this.parseItem, params: this.bgImageParagraphsSet },
+    }
     this.bgImageSet = {
       order: { name: 'order' },
-      content: { name: 'content' },
+      content: { name: 'content', func: this.parseItem, params: this.bgImageConentSet },
       place_holder: { name: 'placeHolder' },
       type: { name: 'type' },
       content_post_type_query: { name: 'contentPostTypeQuery', func: this.parseItem, params: this.contentPostTypeQuerySet },
+      content_post_ids_query: { name: 'contentPostIdsQuery', func: this.parseItem, params: this.contentPostIdsQuerySet },
     }
     this.cardsSet = {
       order: { name: 'order' },
@@ -66,6 +110,7 @@ export class WpAcfHelper {
       place_holder: { name: 'placeHolder' },
       style: { name: 'style', func: this.parseItem, params: this.styleSet },
       content_post_type_query: { name: 'contentPostTypeQuery', func: this.parseItem, params: this.contentPostTypeQuerySet },
+      content_post_ids_query: { name: 'contentPostIdsQuery', func: this.parseItem, params: this.contentPostIdsQuerySet },
     }
     this.paragraphsTitleSet = {
       text: { name: 'text' },
@@ -84,6 +129,18 @@ export class WpAcfHelper {
       type: { name: 'type' },
       style: { name: 'style', func: this.parseItem, params: this.styleSet },
       content_post_type_query: { name: 'contentPostTypeQuery', func: this.parseItem, params: this.contentPostTypeQuerySet },
+      content_post_ids_query: { name: 'contentPostIdsQuery', func: this.parseItem, params: this.contentPostIdsQuerySet },
+    }
+    this.briefsSet = {
+      order: { name: 'order' },
+      content: { name: 'content', func: this.parseItem, params: this.briefSet },
+      place_holder: { name: 'placeHolder' },
+      title: { name: 'title', func: this.parseItem, params: this.paragraphsTitleSet },
+      type: { name: 'type' },
+      style: { name: 'style', func: this.parseItem, params: this.styleSet },
+      content_style: { name: 'contentStyle', func: this.parseItem, params: this.briefsContentStyleSet },
+      content_post_type_query: { name: 'contentPostTypeQuery', func: this.parseItem, params: this.contentPostTypeQuerySet },
+      content_post_ids_query: { name: 'contentPostIdsQuery', func: this.parseItem, params: this.contentPostIdsQuerySet },
     }
     this.postTypeSet = {
       data: { name: 'data' },
@@ -156,15 +213,14 @@ export class WpAcfHelper {
           objectSet = this.paragraphsSet
         } else if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.postType) {
           objectSet = this.postTypeSet
+        } else if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.briefs) {
+          objectSet = this.briefsSet
         }
-        // TODO - add newsFeed to the page, this will reuse this.cardSet, might replace this.cardsSet. use it as latest/top blogs with sammery in it.
+        // TODO - add newsFeed to the homepage, use it as latest/top blogs with sammery in it.
         // if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.newsFeed) {
 
         // TODO - add Thumbnails to the page, similar to cards but it will be just an image with title in the footer. and action link to pages.
         // if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.Thumbnails) {
-
-        // TODO - add shortcuts to the page, use Thumbnails for navigating to other pages.
-        // if (sizeOf(data) > 0 && acfTempplateType === EDomTypes.shortcuts) {
       }
 
       if (!isEmpty(objectSet)) {

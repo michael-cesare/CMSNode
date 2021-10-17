@@ -1,3 +1,6 @@
-import path from 'path';
+import path from 'path'
+import { IS_SRC } from "@config/envConfig"
 
-export const pathResolve = ( location:string ) => path.resolve( '/dist', __dirname, `../${location}` );
+const artifactsLocation = IS_SRC() ? 'src' : 'dist'
+
+export const pathResolve = ( location:string ) => path.resolve( `/${artifactsLocation}`, __dirname, `../${location}` )

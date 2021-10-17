@@ -1,23 +1,26 @@
-import { EWordpressEndpoints } from '@srcTypes/enums'; import {
+import { EWordpressEndpoints } from '@srcTypes/enums'
+import {
   IFetchPostsRequest,
+  IFetchPostsListRequest,
   IWPObject,
   IFetchResponse,
   IWpRepo,
   IWPMenu,
   IError,
-} from '@srcTypes/models';
-import { EWPTypes, EErrorsCodes } from '@srcTypes/enums';
+} from '@srcTypes/models'
+import { EWPTypes, EErrorsCodes } from '@srcTypes/enums'
 
-import { formatUrl } from '@util/url.util';
-import apiClient from '@util/api.util';
-import { isEmpty, isArray, sizeOf } from '@util/core.util';
+import { formatUrl } from '@util/url.util'
+import apiClient from '@util/api.util'
+import { isEmpty, isArray, sizeOf } from '@util/core.util'
 
-import { WordpressHelper } from '@helpers/wordpressHelper';
+import { WordpressHelper } from '@helpers/wordpressHelper'
 
-const fetchMenuEndpoint = EWordpressEndpoints.menuEndpoint;
-const fetchPageEndpoint = EWordpressEndpoints.pagesEndpoint;
-const fetchPostEndpoint = EWordpressEndpoints.postEndpoint;
-const fetchPostsEndpoint = EWordpressEndpoints.postsEndpoint;
+const fetchMenuEndpoint = EWordpressEndpoints.menuEndpoint
+const fetchPageEndpoint = EWordpressEndpoints.pagesEndpoint
+const fetchPostEndpoint = EWordpressEndpoints.postEndpoint
+const fetchPostsEndpoint = EWordpressEndpoints.postsEndpoint
+const fetchPostsListEndpoint = EWordpressEndpoints.postsListEndpoint
 
 /**
  * This is the main class where to read from Wordpress Rest API endpoints.
@@ -32,8 +35,8 @@ class WpRepo implements IWpRepo {
         isPublicPath: true,
       },
     })
-    .then(this.parseWP)
-    .catch(this.handleReject);
+      .then(this.parseWP)
+      .catch(this.handleReject)
   }
 
   fetchPage = async (pageSlug: string): Promise<IFetchResponse> => {
@@ -43,9 +46,9 @@ class WpRepo implements IWpRepo {
         isPublicPath: true,
       },
     })
-    .then(this.parseWP)
-    .catch(this.handleReject);
-  };
+      .then(this.parseWP)
+      .catch(this.handleReject)
+  }
 
   fetchPost = async (slug: string): Promise<IFetchResponse> => {
     const fetchUrl = formatUrl(fetchPostEndpoint, { slug })
@@ -54,9 +57,9 @@ class WpRepo implements IWpRepo {
         isPublicPath: true,
       },
     })
-    .then(this.parseWP)
-    .catch(this.handleReject);
-  };
+      .then(this.parseWP)
+      .catch(this.handleReject)
+  }
 
   fetchPosts = async (params: IFetchPostsRequest): Promise<IFetchResponse> => {
     const fetchUrl = formatUrl(fetchPostsEndpoint, params)
@@ -65,36 +68,47 @@ class WpRepo implements IWpRepo {
         isPublicPath: true,
       },
     })
-    .then(this.parseWP)
-    .catch(this.handleReject);
-  };
+      .then(this.parseWP)
+      .catch(this.handleReject)
+  }
+
+  fetchPostsList = async (fetchPostsListRequest: IFetchPostsListRequest): Promise<IFetchResponse> => {
+    const fetchUrl = formatUrl(fetchPostsListEndpoint, fetchPostsListRequest)
+    return apiClient.get(fetchUrl, {
+      options: {
+        isPublicPath: true,
+      },
+    })
+      .then(this.parseWP)
+      .catch(this.handleReject)
+  }
 
   parseWP = (response: any): Promise<IFetchResponse> =>
     new Promise((resolve: any, reject: any) => {
       const fetchPostsResponse: IFetchResponse = {
         data: [],
         errors: [],
-      };
-      const wpParsed = new WordpressHelper().objectParser(response);
-      const type = response.type || EWPTypes.unknown;
+      }
+      const wpParsed = new WordpressHelper().objectParser(response)
+      const type = response.type || EWPTypes.unknown
       if (type === EWPTypes.menu) {
-        fetchPostsResponse.data = wpParsed as IWPMenu;
+        fetchPostsResponse.data = wpParsed as IWPMenu
       } else if (type === EWPTypes.page) {
-        fetchPostsResponse.data = wpParsed as IWPObject;
+        fetchPostsResponse.data = wpParsed as IWPObject
       } else if (type === EWPTypes.post) {
-        fetchPostsResponse.data = wpParsed as IWPObject;
+        fetchPostsResponse.data = wpParsed as IWPObject
       } else if (type === EWPTypes.posts) {
-        fetchPostsResponse.data = wpParsed as Array<IWPObject>;
+        fetchPostsResponse.data = wpParsed as Array<IWPObject>
       } else if (!isEmpty(response) && isArray(response)) {
-        fetchPostsResponse.data = wpParsed as Array<IWPObject>;
+        fetchPostsResponse.data = wpParsed as Array<IWPObject>
       } else if (!isEmpty(response) && sizeOf(response) > 0) {
-        fetchPostsResponse.data = wpParsed as IWPObject;
+        fetchPostsResponse.data = wpParsed as IWPObject
       } else {
-        reject('not parseable');
+        reject('not parseable')
       }
 
-      return resolve(fetchPostsResponse);
-    });
+      return resolve(fetchPostsResponse)
+    })
 
   /** Handle errors by resolving promise and retunr error object in result */
   handleReject = (response: any): Promise<IFetchResponse> =>
@@ -102,18 +116,18 @@ class WpRepo implements IWpRepo {
       const fetchPostsResponse: IFetchResponse = {
         data: [],
         errors: [],
-      };
+      }
       const error: IError = {
         code: EErrorsCodes.FailedFetch,
         info: response,
       }
-      const errors: Array<IError> = [];
+      const errors: Array<IError> = []
       errors.push(error)
-      fetchPostsResponse.errors = errors;
+      fetchPostsResponse.errors = errors
 
-      return resolve(fetchPostsResponse);
-    });
+      return resolve(fetchPostsResponse)
+    })
 
 }
 
-export default WpRepo;
+export default WpRepo
