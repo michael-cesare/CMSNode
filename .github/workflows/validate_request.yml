@@ -1,0 +1,21 @@
+name: Validate Request
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+      - master
+
+jobs:
+  branch-naming:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: deepakputhraya/action-branch-name@master
+        with:
+          regex: '^(feature|bugfix|hotfix|docs|style|test|revert|chore)\/(Task-[0-9]+)(-)([a-z0-9_-])+$' # Regex the branch should match.
+          allowed_prefixes: 'feature,bugfix,hotfix,docs,style,test,revert,chore' # All branches should start with the given prefix
+          ignore: master,main,develop # Ignore exactly matching branch names from convention
+          min_length: 15 # Min length of the branch name
+          max_length: 70 # Max length of the branch name
+

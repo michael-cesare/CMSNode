@@ -7,8 +7,6 @@ import cors from 'cors';
 import envConfig, { PORT } from "@config/envConfig";
 
 import logger from '@util/logger.util';
-import { pathResolve } from '@util/path.util';
-import { readfile } from '@util/fs.util';
 
 const initNode = async () => {
   const app = express();
@@ -36,17 +34,8 @@ const initNode = async () => {
   logger.info(`**********************************************`);
 }
 
-const startNode = async (data: any) => {
+export const startNode = (data: any) => {
   logger.log(`APP Configs: ${JSON.stringify(data)}`);
   envConfig.config = data;
-  await initNode();
+  initNode();
 }
-
-const errorCatcher = async (err: any) => {
-  logger.log(`err ${JSON.stringify(err)}`);
-}
-
-const configFilePath = pathResolve("/public/config.json");
-readfile(configFilePath)
-  .then(startNode)
-  .catch(errorCatcher)

@@ -228,7 +228,6 @@
         "type": "briefs",
         "style": {
           "color": "rgba(0,0,0,1)",
-          "background_color": "rgba(255,255,255,1)",
           "padding": "1.5rem"
         }
       }

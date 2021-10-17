@@ -1,0 +1,66 @@
+{
+  "id": 2,
+  "date": "2019-09-17T08:40:50",
+  "modified": "2020-10-25T13:49:03",
+  "slug": "contact-page",
+  "status": "publish",
+  "type": "page",
+  "link": "http:\/\/wordpress.homes.com:5050\/contact\/",
+  "title": "Contact US",
+  "content": "<pageContent>[[paragraphs]]</pageContent>\n",
+  "excerpt": "<p>Contact Page.<\/p>\n",
+  "author": 1,
+  "parent": 0,
+  "menuOrder": 0,
+  "template": "home.php",
+  "acf": {
+    "page_templates": [
+      {
+        "order": 1,
+        "content": [
+          {
+            "text": "<p> Contact Page.</p>",
+            "style": {
+              "color": "rgba(0,0,0,1)",
+              "background_color": "rgba(255,255,255,1)",
+              "padding": ".25rem 0",
+              "text_align": "left",
+              "font_size": "1.2rem",
+              "line_height": "1.6rem"
+            }
+          },
+          {
+            "text": "<p>Under Construction.</p>",
+            "style": {
+              "color": "rgba(0,0,0,1)",
+              "background_color": "rgba(255,255,255,1)",
+              "padding": ".25rem 0",
+              "text_align": "left",
+              "font_size": "1.2rem",
+              "line_height": "1.6rem"
+            }
+          }
+        ],
+        "place_holder": "paragraphs",
+        "type": "paragraphs",
+        "title": {
+          "text": "Contact",
+          "style": {
+            "color": "rgba(0,0,0,1)",
+            "background_color": "rgba(255,255,255,1)",
+            "padding": ".5rem 0",
+            "text_align": "left",
+            "font_size": "2.2rem"
+          }
+        },
+        "style": {
+          "color": "rgba(0,0,0,1)",
+          "background_color": "rgba(255,255,255,1)",
+          "padding": "1.5rem 10% .5rem 10%",
+          "text_align": "left",
+          "font_size": "1.5rem"
+        }
+      }
+    ]
+  }
+}

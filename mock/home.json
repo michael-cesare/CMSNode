@@ -17,7 +17,38 @@
       "page_templates": [
         {
           "order": 1,
-          "content": "<div class=\"bg-image\" style=\"background-image: url(http:\/\/i.insider.com\/5ad8e2b9bd967120008b4656)\"><div class=\"overlay\"><\/div><div class=\"pad-section relative\"><h2 style=\"text-align: center;\">Home Instead Senior Care presents<\/h2><p>&nbsp;<\/p><p style=\"text-align: center;\">Personalised senior care and lifestyle services to help you live your best<\/p><h3 style=\"text-align: center;\">Live well at home, your way with Home Instead<\/h3><p style=\"text-align: center;\">We understand that home is where you feel the happiest. If you want to stay living comfortably at home, you can live well, your way with Home Instead.<\/p><\/div><\/div>\n",
+          "content": {
+            "url": "http:\/\/i.insider.com\/5ad8e2b9bd967120008b4656",
+            "header": {
+              "text": "<h2>Home Instead Senior Care presents</h2>",
+              "style": {
+                "text_align": "center",
+                "color": "rgba(255,255,255,1)",
+                "padding": "1rem",
+                "font_size": "2.2rem"
+              }
+            },
+            "paragraphs": [
+              {
+                "text": "<p>Personalised senior care and lifestyle services to help you live your best</p>",
+                "style": {
+                  "text_align": "center",
+                  "color": "rgba(255,255,255,1)",
+                  "padding": "1rem",
+                  "font_size": "1.2rem"
+                }
+              },
+              {
+                "text": "<p>feel the happiest. If you want to stay living comfortably at home, you can live well, your way with Home Instead.</p>",
+                "style": {
+                  "text_align": "center",
+                  "color": "rgba(255,255,255,1)",
+                  "padding": "1rem",
+                  "font_size": "1.2rem"
+                }
+              }
+            ]
+          },
           "place_holder": "bg-image",
           "type": "bg-image"
         },
